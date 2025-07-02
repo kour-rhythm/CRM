@@ -1,0 +1,133 @@
+/* General container styling - consistent with other management pages */
+.reports-container {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 30px;
+  background-color: #ffffff; /* White background for contrast */
+  border-radius: 15px;
+  /* --- Moonlit Serenity Tones: Enhanced shadow for a floating effect --- */
+  box-shadow: 0 15px 35px rgba(61, 82, 160, 0.15); /* Softer, wider shadow */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+/* Removed duplicated .app-header and related styles from here, as they should be in global.css
+ These styles were causing conflicts with the global header/navbar styling. */
+
+
+.page-title {
+  text-align: center;
+  /* --- Moonlit Serenity Tones: Darkest blue/purple for main headings with text shadow --- */
+  color: #3D52A0; /* Darkest blue/purple */
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); /* Subtle text shadow */
+  margin-bottom: 40px; /* Increased margin for the title */
+  font-size: 2.2rem;
+  font-weight: 700;
+}
+
+.reports-options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px; /* Space between buttons */
+  padding: 20px;
+  /* --- Moonlit Serenity Tones: Very light purple/gray background for the grid --- */
+  background-color: #F8F5FB; /* A very subtle off-white/purple-gray */
+  border-radius: 10px;
+  /* --- Moonlit Serenity Tones: Subtle inner shadow for depth --- */
+  box-shadow: inset 0 0 10px rgba(61, 82, 160, 0.05); /* Inner shadow for depth */
+}
+
+.report-option-button {
+  /* --- Moonlit Serenity Tones: Medium blue for button with gradient --- */
+  background: linear-gradient(to right, #7091E6, #8697C4); /* Gradient for depth */
+  color: white;
+  padding: 30px 20px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  /* --- Moonlit Serenity Tones: Enhanced shadow for buttons --- */
+  box-shadow: 0 6px 15px rgba(61, 82, 160, 0.25); /* Softer, more prominent shadow */
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 150px; /* Ensure buttons have a minimum height */
+}
+
+.report-option-button:hover {
+  /* --- Moonlit Serenity Tones: Darkest blue/purple on hover, more pronounced lift and shadow --- */
+  background-color: #3D52A0; /* Darkest blue/purple */
+  transform: translateY(-8px); /* More pronounced lift effect */
+  box-shadow: 0 12px 25px rgba(61, 82, 160, 0.4); /* Stronger shadow on hover */
+}
+
+.report-option-button span {
+  display: block; /* Ensures description is on a new line */
+  font-size: 0.9rem;
+  font-weight: 400;
+  margin-top: 10px;
+  opacity: 0.9;
+  color: white; /* Ensure text is visible on the button */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .reports-container {
+      margin: 20px;
+      padding: 20px;
+  }
+
+  /* .app-header responsiveness is handled in global.css */
+
+  .page-title {
+      font-size: 1.8rem;
+      margin-bottom: 30px;
+  }
+
+  .reports-options-grid {
+      grid-template-columns: 1fr; /* Stack buttons on smaller screens */
+      gap: 20px;
+      padding: 15px;
+  }
+
+  .report-option-button {
+      font-size: 1.3rem;
+      padding: 25px 15px;
+      min-height: 120px;
+  }
+  .report-option-button span {
+      font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .reports-container {
+      margin: 10px;
+      padding: 15px;
+  }
+
+  /* .app-header responsiveness is handled in global.css */
+
+  .page-title {
+      font-size: 1.5rem;
+      margin-bottom: 25px;
+  }
+
+  .reports-options-grid {
+      gap: 15px;
+      padding: 10px;
+  }
+
+  .report-option-button {
+      font-size: 1.1rem;
+      padding: 20px 10px;
+      min-height: 100px;
+  }
+  .report-option-button span {
+      font-size: 0.75rem;
+  }
+}

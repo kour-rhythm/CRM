@@ -1,0 +1,240 @@
+/* Container for both login and register forms */
+.auth-container {
+  max-width: 400px; /* Maximum width for forms */
+  margin: 50px auto; /* Center the form horizontally with top/bottom margin */
+  padding: 25px 35px; /* Internal spacing */
+  background-color: white; /* White background */
+  border-radius: 12px; /* Rounded corners for a softer look */
+  /* --- Moonlit Serenity Tones: More prominent shadow for depth, with blue/purple tint --- */
+  box-shadow: 0 8px 25px rgba(61, 82, 160, 0.2); /* Enhanced shadow */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Consistent font */
+  text-align: center; /* Center align text within the container */
+}
+
+/* Heading style for form titles */
+h2 {
+  /* --- Moonlit Serenity Tones: Darkest blue/purple color with subtle text shadow --- */
+  color: #3D52A0; /* Darkest blue/purple */
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); /* Subtle text shadow */
+  margin-bottom: 25px; /* Space below heading */
+  font-size: 28px; /* Larger font size */
+  font-weight: 700; /* Bold font */
+}
+
+/* Styling for individual form input groups (label + input) */
+.form-group {
+  margin-bottom: 20px; /* Space between form groups */
+  text-align: left; /* Align labels and inputs to the left */
+}
+
+/* Styling for labels */
+label {
+  display: block; /* Make label take full width */
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #555; /* Neutral dark grey */
+}
+
+/* Styling for all input fields */
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+  width: 100%;
+  padding: 12px 15px;
+  /* --- Moonlit Serenity Tones: Muted blue/gray border --- */
+  border: 1px solid #8697C4; /* Muted blue/gray */
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 16px;
+  transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+/* Focus state for input fields */
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus {
+  /* --- Moonlit Serenity Tones: Darkest blue/purple border on focus --- */
+  border-color: #3D52A0; /* Darkest blue/purple */
+  /* --- Moonlit Serenity Tones: Muted blue/gray shadow on focus, slightly more pronounced --- */
+  box-shadow: 0 0 0 4px rgba(134, 151, 196, 0.3); /* Clearer focus indication */
+  outline: none;
+}
+
+/* Styling for the submit button */
+button[type="submit"] {
+  width: 100%;
+  padding: 12px 20px;
+  /* --- Moonlit Serenity Tones: Medium blue for submit button with gradient --- */
+  background: linear-gradient(to right, #7091E6, #8697C4); /* Subtle gradient */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Initial subtle shadow */
+  margin-top: 15px;
+}
+
+/* Hover state for the submit button */
+button[type="submit"]:hover:not(:disabled) {
+  /* --- Moonlit Serenity Tones: Darkest blue/purple on hover, more prominent shadow --- */
+  background-color: #3D52A0; /* Darkest blue/purple */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(61, 82, 160, 0.4); /* Clearer shadow on hover */
+}
+
+/* Disabled state for the submit button */
+button[type="submit"]:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Styling for error messages (e.g., from backend) */
+.alert-error {
+  background-color: #f8d7da; /* Standard red for error, kept for clarity */
+  color: #721c24;
+  padding: 10px 15px;
+  border: 1px solid #f5c6cb;
+  border-radius: 8px;
+  margin-top: 20px;
+  font-size: 15px;
+  text-align: center;
+}
+
+/* Styling for success messages (e.g., from backend) */
+.alert-success {
+  background-color: #d4edda; /* Standard green for success, kept for clarity */
+  color: #155724;
+  padding: 10px 15px;
+  border: 1px solid #c3e6cb;
+  border-radius: 8px;
+  margin-top: 20px;
+  font-size: 15px;
+  text-align: center;
+}
+
+/* Styling for client-side validation error messages below inputs */
+.error-message {
+  color: #dc3545; /* Standard red for error, kept for clarity */
+  font-size: 13px;
+  margin-top: 5px;
+  text-align: left;
+}
+
+/* Styling for the link text (e.g., "Don't have an account?") */
+.link-text {
+  margin-top: 25px;
+  font-size: 15px;
+  color: #666; /* Neutral grey */
+}
+
+/* Styling for the actual link within the link text */
+.link-text a {
+  /* --- Moonlit Serenity Tones: Medium blue for links --- */
+  color: #7091E6; /* Medium blue */
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* Hover state for links */
+.link-text a:hover {
+  text-decoration: underline;
+  /* --- Moonlit Serenity Tones: Darkest blue/purple for link hover --- */
+  color: #3D52A0; /* Darker on hover */
+}
+
+/* Responsive considerations for smaller screens */
+@media (max-width: 600px) {
+  .auth-container {
+      margin: 30px 15px;
+      padding: 15px 20px;
+  }
+
+  h2 {
+      font-size: 24px;
+  }
+
+  button[type="submit"] {
+      font-size: 16px;
+      padding: 10px 15px;
+  }
+}
+
+/* --- Styles for the embedded Navigation Bar (from app.component.css) --- */
+/* These styles ensure the navbar looks consistent when embedded in auth components */
+
+.navbar {
+  /* --- Moonlit Serenity Tones: Darkest blue/purple background with subtle gradient --- */
+  background: linear-gradient(to right, #3D52A0, #4C65B0); /* Subtle gradient for depth */
+  padding: 10px 0;
+  text-align: center;
+  border-radius: 0 0 10px 10px;
+  /* --- Moonlit Serenity Tones: Enhanced shadow for depth and lift --- */
+  box-shadow: 0 4px 15px rgba(61, 82, 160, 0.2); /* Softer, more prominent shadow */
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: center; /* Center the overall content within the navbar */
+}
+
+.navbar-content {
+  display: flex;
+  justify-content: space-between; /* Pushes logo to left, nav-list to right */
+  align-items: center;
+  width: 100%; /* Take full width of the navbar */
+  max-width: 900px; /* Constrain width like other containers */
+  padding: 0 20px; /* Add horizontal padding */
+}
+
+.navbar-logo-link {
+  display: flex; /* Ensures image and potential text are aligned */
+  align-items: center;
+  text-decoration: none; /* Remove underline */
+}
+
+.navbar-logo {
+  height: 30px; /* Adjust logo size as needed */
+  width: auto;
+  margin-right: 10px; /* Space between logo and potential text (if you add any) */
+}
+
+
+.nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 30px;
+}
+
+.nav-item a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.1em;
+  padding: 8px 15px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-weight: 500;
+}
+
+.nav-item a:hover {
+  background-color: #7091E6; 
+  transform: translateY(-2px);
+}
+
+.nav-item a.active-link {
+  background-color: #3D52A0;
+  box-shadow: 0 2px 8px rgba(0, 123, 255, 0.4);
+  font-weight: 700;
+}
+
+/* General Body Styling (global, usually in styles.css or app.component.css) */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f0f2f5; /* Light background for the whole page */
+  color: #333;
+}

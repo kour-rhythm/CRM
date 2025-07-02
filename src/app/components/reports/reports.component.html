@@ -1,0 +1,34 @@
+<div class="reports-container">
+    <!-- Header (consistent with other internal pages) -->
+    <header class="app-header">
+      <div class="logo-section">
+        <a routerLink="/dashboard" class="header-logo-link">
+          <img src="assets/crm.png" alt="App Logo" class="logo-image">
+        </a>
+      </div>
+      <div class="header-right">
+        <a routerLink="/dashboard" class="dashboard-link-right">Dashboard</a>
+        <button class="logout-button" (click)="logout()">Logout</button>
+      </div>
+    </header>
+  
+    <h1 class="page-title">Reports Dashboard</h1>
+  
+    <div class="reports-options-grid">
+      <button class="report-option-button" routerLink="/customer-report">
+        Customer Reports
+        <span>Detailed insights into customer behavior.</span>
+      </button>
+  
+      <button class="report-option-button" routerLink="/marketing-report">
+        Marketing Reports
+        <span>Analysis of marketing campaign performance.</span>
+      </button>
+  
+      <button class="report-option-button" routerLink="/sales-report">
+        Sales Reports
+        <span>Overview of sales opportunities and revenue.</span>
+      </button>
+    </div>
+  </div>
+  

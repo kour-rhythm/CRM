@@ -1,0 +1,125 @@
+<div class="marketing-container">
+  <!-- Header (consistent with other internal pages) -->
+  <header class="app-header">
+    <div class="logo-section">
+      <a routerLink="/dashboard" class="header-logo-link">
+        <img src="assets/crm.png" alt="App Logo" class="logo-image">
+      </a>
+    </div>
+    <div class="header-right">
+      <a routerLink="/marketing" class="dashboard-link-right">Marketing Portal</a>
+      <a routerLink="/dashboard" class="dashboard-link-right">Dashboard</a>
+      <button class="logout-button" (click)="logout()">Logout</button>
+    </div>
+  </header>
+
+  <h1 class="page-title">Campaign Management</h1>
+
+  <!-- Status Messages -->
+  <div *ngIf="isLoading" class="loading-spinner">Loading...</div>
+  <div *ngIf="addCampaignMessage" [ngClass]="{'alert-message success': addCampaignSuccess, 'alert-message error': !addCampaignSuccess}" role="alert">
+    {{ addCampaignMessage }}
+  </div>
+  <div *ngIf="specificCampaignMessage && !addCampaignMessage" class="alert-message error">
+    {{ specificCampaignMessage }}
+  </div>
+
+  <!-- Create Campaign Form Section -->
+  <div class="form-section">
+    <h2 class="section-title">Create New Campaign</h2>
+    <form [formGroup]="campaignForm" (ngSubmit)="createCampaign()">
+      <div class="form-group">
+        <label for="name">Campaign Name:</label>
+        <input type="text" id="name" formControlName="name" placeholder="e.g., Summer Sale Email Campaign">
+        <div *ngIf="campaignForm.get('name')?.invalid && campaignForm.get('name')?.touched" class="error-text">
+          Name is required.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="startDate">Start Date:</label>
+        <input type="date" id="startDate" formControlName="startDate">
+        <div *ngIf="campaignForm.get('startDate')?.invalid && campaignForm.get('startDate')?.touched" class="error-text">
+          Start Date is required.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="endDate">End Date:</label>
+        <input type="date" id="endDate" formControlName="endDate">
+        <div *ngIf="campaignForm.get('endDate')?.invalid && campaignForm.get('endDate')?.touched" class="error-text">
+          End Date is required.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="type">Campaign Type:</label>
+        <select id="type" formControlName="type">
+          <option *ngFor="let type of campaignTypes" [ngValue]="type">{{ type }}</option>
+        </select>
+        <div *ngIf="campaignForm.get('type')?.invalid && campaignForm.get('type')?.touched" class="error-text">
+          Campaign Type is required.
+        </div>
+      </div>
+
+      <!-- Conditionally display MailerSend ID input for EMAIL campaigns -->
+      <div class="form-group" *ngIf="campaignForm.get('type')?.value === CampaignType.EMAIL">
+        <label for="mailerSendCampaignId">MailerSend Campaign ID:</label>
+        <input type="text" id="mailerSendCampaignId" formControlName="mailerSendCampaignId" placeholder="Optional: MailerSend ID">
+        <!-- No specific validation required here based on current backend DTO -->
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" [disabled]="campaignForm.invalid || isLoading" class="submit-button">
+          Create Campaign
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- View Campaigns Section -->
+  <div class="display-section">
+    <h2 class="section-title">View Campaigns</h2>
+
+    <div class="display-options">
+      <label for="displayOption">Display Option:</label>
+      <select id="displayOption" [(ngModel)]="selectedDisplayOption" (change)="onDisplayOptionChange()">
+        <option value="all">All Campaigns</option>
+        <option value="specific">Specific Campaign (by ID)</option>
+      </select>
+    </div>
+
+    <!-- Specific Campaign Input (conditionally displayed) -->
+    <div *ngIf="selectedDisplayOption === 'specific'" class="input-group-specific mt-3">
+      <label for="specificCampaignId">Campaign ID:</label>
+      <div class="input-with-button">
+        <input type="number" id="specificCampaignId" [(ngModel)]="specificCampaignId" placeholder="Enter Campaign ID">
+        <button (click)="getSpecificCampaign()" [disabled]="!specificCampaignId || isLoading" class="fetch-button">
+          Get Campaign
+        </button>
+      </div>
+    </div>
+
+    <!-- Campaign Cards Display -->
+    <div class="campaign-card-grid mt-4">
+      <ng-container *ngIf="displayedCampaigns.length > 0; else noCampaigns">
+        <div *ngFor="let campaign of displayedCampaigns" class="campaign-card">
+          <div class="card-header">
+            <h3>{{ campaign.name }}</h3>
+            <span class="card-id">ID: {{ campaign.campaignID }}</span>
+          </div>
+          <div class="card-body">
+            <p><strong>Type:</strong> {{ campaign.type }}</p>
+            <p><strong>Starts:</strong> {{ campaign.startDate }}</p>
+            <p><strong>Ends:</strong> {{ campaign.endDate }}</p>
+            <p *ngIf="campaign.mailerSendCampaignId"><strong>MailerSend ID:</strong> {{ campaign.mailerSendCampaignId }}</p>
+          </div>
+          <!-- Optional: Add action buttons like Delete or Edit here -->
+        </div>
+      </ng-container>
+      <ng-template #noCampaigns>
+        <p class="no-data-message">No campaigns to display.</p>
+      </ng-template>
+    </div>
+  </div>
+</div>

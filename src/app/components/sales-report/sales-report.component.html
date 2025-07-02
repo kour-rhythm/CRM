@@ -1,0 +1,100 @@
+<div class="sales-reports-container">
+    <!-- Header (consistent with other internal pages, including a back button) -->
+    <header class="app-header">
+      <div class="logo-section">
+        <a routerLink="/dashboard" class="header-logo-link">
+          <img src="assets/crm.png" alt="App Logo" class="logo-image">
+        </a>
+      </div>
+      <div class="header-right">
+        <a class="dashboard-link-right" routerLink="/reports">Reports Portal</a>
+        <a routerLink="/dashboard" class="dashboard-link-right">Dashboard</a>
+        <button class="logout-button" (click)="logout()">Logout</button>
+      </div>
+    </header>
+  
+    <h1 class="page-title">Sales Reports</h1>
+  
+    <!-- Status Messages -->
+    <div *ngIf="isLoading" class="loading-spinner">Loading/Generating Reports...</div>
+    <div *ngIf="errorMessage" class="alert-message error">{{ errorMessage }}</div>
+    <div *ngIf="successMessage" class="alert-message success">{{ successMessage }}</div>
+  
+    <!-- Report Generation Section -->
+    <div class="report-section generate-report-section">
+      <h3>Generate New Sales Report</h3>
+      <p class="section-description">Fetch the latest sales opportunity data and save it as a report.</p>
+      <div class="input-group">
+        <label for="opportunityIdToGenerate">Enter Sales Opportunity ID:</label>
+        <div class="input-with-button">
+          <input type="number" id="opportunityIdToGenerate" name="opportunityIdToGenerate"
+                 [(ngModel)]="opportunityIdToGenerate" placeholder="e.g., 789">
+          <button type="button" (click)="generateNewSalesReport()" [disabled]="!opportunityIdToGenerate || isLoading" class="generate-button">
+            Generate & Save
+          </button>
+        </div>
+      </div>
+    </div>
+  
+    <div class="divider">OR</div>
+  
+    <!-- View Sales Reports Section -->
+    <div class="report-section view-reports-section">
+      <h3>View Sales Reports</h3>
+      <p class="section-description">Retrieve sales reports that have already been generated and saved locally.</p>
+  
+      <!-- Input for Specific Sales Report ID -->
+      <div class="input-group">
+        <label for="specificOpportunityIdInput">Enter Sales Opportunity ID:</label>
+        <div class="input-with-button">
+          <input type="number" id="specificOpportunityIdInput" name="specificOpportunityIdInput"
+                 [(ngModel)]="specificOpportunityIdInput" placeholder="e.g., 789">
+          <button type="button" (click)="fetchSpecificSalesReport()" [disabled]="!specificOpportunityIdInput || isLoading" class="fetch-button">
+            Get Report
+          </button>
+        </div>
+        <div *ngIf="specificOpportunityIdInput === null && !isLoading && displayedReports.length === 0 && !errorMessage" class="info-text">
+          Enter an ID above to view a specific report.
+        </div>
+      </div>
+  
+      <div class="divider small-divider">OR</div>
+  
+      <!-- Button to View All Sales Reports -->
+      <div class="view-all-reports-section">
+        <button type="button" (click)="showAllSalesReports()" [disabled]="isLoading" class="view-all-button">
+          View All Sales Reports
+        </button>
+      </div>
+  
+      <!-- Cards for Displayed Sales Reports -->
+      <div class="report-card-grid mt-4">
+        <ng-container *ngIf="displayedReports.length > 0; else noReports">
+          <div class="report-card" *ngFor="let report of displayedReports">
+            <div class="card-header">
+              <h4>Opportunity: {{ report.name }} (ID: {{ report.id }})</h4>
+              <span class="card-stage">{{ report.stage }}</span>
+            </div>
+            <div class="card-body">
+              <p><strong>Amount:</strong> {{ report.amount | currency:'USD':'symbol':'1.2-2' }}</p>
+              <p><strong>Close Date:</strong> {{ report.closeDate | date:'mediumDate' }}</p>
+              <p><strong>Lead Source:</strong> {{ report.leadSource }}</p>
+              <p *ngIf="report.notes"><strong>Notes:</strong> {{ report.notes }}</p>
+              <!-- Note: generatedAt is not in SalesOpportunityResponseDto from backend.
+                   If you want to display generation time, backend DTO needs to be updated. -->
+              <!-- <p><strong>Generated At:</strong> {{ report.generatedAt | date:'medium' }}</p> -->
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #noReports>
+          <p class="no-data-message" *ngIf="!isLoading && !errorMessage">
+            No sales reports to display.
+          </p>
+          <p class="no-data-message" *ngIf="errorMessage">
+            {{ errorMessage }}
+          </p>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  

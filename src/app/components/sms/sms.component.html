@@ -1,0 +1,81 @@
+<div class="marketing-container">
+    <!-- Header (consistent with other internal pages) -->
+    <header class="app-header">
+      <div class="logo-section">
+        <a routerLink="/dashboard" class="header-logo-link">
+          <img src="assets/crm.png" alt="App Logo" class="logo-image">
+        </a>
+      </div>
+      <div class="header-right">
+        <a routerLink="/marketing" class="dashboard-link-right">Marketing Portal</a>
+        <a routerLink="/dashboard" class="dashboard-link-right">Dashboard</a>
+        <button class="logout-button" (click)="logout()">Logout</button>
+      </div>
+    </header>
+  
+    <h1 class="page-title">Marketing via SMS</h1>
+  
+    <!-- Status Messages -->
+    <div *ngIf="isLoading" class="loading-spinner">Loading...</div>
+    <div *ngIf="sendSmsMessage" [ngClass]="{'alert-message success': sendSmsSuccess, 'alert-message error': !sendSmsSuccess}" role="alert">
+      {{ sendSmsMessage }}
+    </div>
+  
+    <!-- Send SMS Campaign Form Section -->
+    <div class="form-section">
+      <h2 class="section-title">Send SMS Campaign</h2>
+      <form [formGroup]="sendSmsForm" (ngSubmit)="sendSmsCampaign()">
+        <div class="form-group">
+          <label for="campaignId">Select Campaign:</label>
+          <select id="campaignId" formControlName="campaignId">
+            <option [ngValue]="null" disabled>-- Select an SMS Campaign --</option>
+            <!-- Use the pipe to filter for SMS campaigns -->
+            <option *ngFor="let campaign of campaigns | filterCampaigns:'SMS'" [ngValue]="campaign.campaignID">
+              {{ campaign.campaignID }} - {{ campaign.name }} ({{ campaign.startDate }} to {{ campaign.endDate }})
+            </option>
+          </select>
+          <div *ngIf="sendSmsForm.get('campaignId')?.invalid && sendSmsForm.get('campaignId')?.touched" class="error-text">
+            Campaign is required.
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="customerIds">Select Customers (Ctrl+Click for multiple):</label>
+          <select id="customerIds" formControlName="customerIds" multiple size="5">
+            <option *ngFor="let customer of customers" [ngValue]="customer.id">
+              {{ customer.id }} - {{ customer.name }} ({{ customer.mobileNo }})
+            </option>
+          </select>
+          <div *ngIf="sendSmsForm.get('customerIds')?.invalid && sendSmsForm.get('customerIds')?.touched" class="error-text">
+            At least one customer is required.
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="productId">Select Product (Optional for personalization):</label>
+          <select id="productId" formControlName="productId">
+            <option [ngValue]="null">-- Select a Product --</option>
+            <option *ngFor="let product of products" [ngValue]="product.id">
+              {{ product.id }} - {{ product.productName }} ({{ product.productBrandName }})
+            </option>
+          </select>
+        </div>
+  
+        <div class="form-group">
+          <label for="messageTemplate">Message Template:</label>
+          <textarea id="messageTemplate" formControlName="messageTemplate" rows="5" placeholder="Hi [Customer Name], check out [Product Name] at [Product Price] only!"></textarea>
+          <div *ngIf="sendSmsForm.get('messageTemplate')?.invalid && sendSmsForm.get('messageTemplate')?.touched" class="error-text">
+            Message content is required.
+          </div>
+          <small class="template-hint">Use backend variables like <code>&#123;customerName&#125;</code>, <code>&#123;productName&#125;</code>, <code>&#123;productPrice&#125;</code>, etc. for personalization.</small>
+        </div>
+  
+        <div class="form-actions">
+          <button type="submit" [disabled]="sendSmsForm.invalid || isLoading" class="submit-button">
+            Send SMS Campaign
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  

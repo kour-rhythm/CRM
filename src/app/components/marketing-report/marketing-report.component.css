@@ -1,0 +1,390 @@
+/* General container styling - consistent with other management pages */
+.marketing-reports-container {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 30px;
+  background-color: #ffffff; /* White background for contrast */
+  border-radius: 15px;
+  /* --- Moonlit Serenity Tones: Enhanced shadow for a floating effect --- */
+  box-shadow: 0 15px 35px rgba(61, 82, 160, 0.15); /* Softer, wider shadow */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+/* Removed duplicated .app-header and related styles from here, as they should be in global.css
+ These styles were causing conflicts with the global header/navbar styling. */
+
+
+.page-title {
+  text-align: center;
+  /* --- Moonlit Serenity Tones: Darkest blue/purple for main headings with text shadow --- */
+  color: #3D52A0; /* Darkest blue/purple */
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); /* Subtle text shadow */
+  margin-bottom: 40px;
+  font-size: 2.2rem;
+  font-weight: 700;
+}
+
+/* Report Sections */
+.report-section {
+  margin-top: 20px;
+  padding: 25px;
+  /* --- Moonlit Serenity Tones: Light blue/gray border --- */
+  border: 1px solid #ADBBDA; /* Light blue/gray */
+  border-radius: 10px;
+  /* --- Moonlit Serenity Tones: Very light purple/gray background for forms/display sections --- */
+  background-color: #F8F5FB; /* A very subtle off-white/purple-gray */
+  /* --- Moonlit Serenity Tones: Subtle box shadow for lift --- */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); /* Slight lift */
+}
+
+.report-section h3 {
+  text-align: center; /* Centered for a cleaner look */
+  /* --- Moonlit Serenity Tones: Medium blue accent for sub-headings with text shadow --- */
+  color: #7091E6; /* Medium blue */
+  text-shadow: 0.5px 0.5px 1px rgba(0, 0, 0, 0.1); /* Subtle text shadow */
+  margin-bottom: 10px;
+  /* --- Moonlit Serenity Tones: Light blue/gray border, slightly thicker --- */
+  border-bottom: 2px solid #ADBBDA; /* Light blue/gray, thicker line */
+  padding-bottom: 10px;
+  font-size: 1.6rem;
+}
+
+.section-description {
+  text-align: center;
+  color: #6c757d; /* Neutral gray */
+  margin-bottom: 20px;
+  font-size: 0.95rem;
+}
+
+.input-group {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #555;
+}
+
+.input-with-button {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.input-with-button input[type="number"] {
+  flex-grow: 1;
+  padding: 12px;
+  /* --- Moonlit Serenity Tones: Muted blue/gray border for inputs --- */
+  border: 1px solid #8697C4; /* Muted blue/gray */
+  border-radius: 8px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.input-with-button input:focus {
+  /* --- Moonlit Serenity Tones: Darkest blue/purple border on focus --- */
+  border-color: #3D52A0; /* Darkest blue/purple */
+  /* --- Moonlit Serenity Tones: Muted blue/gray shadow on focus, slightly more pronounced --- */
+  box-shadow: 0 0 0 4px rgba(134, 151, 196, 0.3); /* Clearer focus indication */
+  outline: none;
+}
+
+.generate-button, .fetch-button, .view-all-button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Initial subtle shadow */
+  color: white; /* Ensure text is white */
+}
+
+.generate-button {
+  /* --- Moonlit Serenity Tones: Medium blue for generate button with gradient --- */
+  background: linear-gradient(to right, #7091E6, #8697C4); /* Gradient for depth */
+}
+
+.generate-button:hover:not(:disabled) {
+  /* --- Moonlit Serenity Tones: Darkest blue/purple on hover, more prominent shadow --- */
+  background-color: #3D52A0; /* Darkest blue/purple */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(61, 82, 160, 0.4); /* Clearer shadow on hover */
+}
+
+.fetch-button {
+  /* --- Moonlit Serenity Tones: Medium blue for fetch button with gradient --- */
+  background: linear-gradient(to right, #7091E6, #8697C4); /* Gradient for depth */
+}
+
+.fetch-button:hover:not(:disabled) {
+  /* --- Moonlit Serenity Tones: Darkest blue/purple on hover, more prominent shadow --- */
+  background-color: #3D52A0; /* Darkest blue/purple */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(61, 82, 160, 0.4); /* Clearer shadow on hover */
+}
+
+.view-all-button {
+  /* --- Moonlit Serenity Tones: Muted blue/gray for view all button with gradient --- */
+  background: linear-gradient(to right, #8697C4, #ADBBDA); /* Gradient for depth */
+  display: block; /* Make it a block element to use margin: auto */
+  margin: 0 auto; /* Center the button */
+}
+
+.view-all-button:hover:not(:disabled) {
+  /* --- Moonlit Serenity Tones: Darkest blue/purple on hover, more prominent shadow --- */
+  background-color: #3D52A0; /* Darkest blue/purple */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(61, 82, 160, 0.4); /* Clearer shadow on hover */
+}
+
+.generate-button:disabled, .fetch-button:disabled, .view-all-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+
+.info-text {
+  color: #6c757d; /* Neutral gray */
+  font-size: 0.9rem;
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* Report Card Grid */
+.report-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+  margin-top: 20px;
+  justify-content: center;
+}
+
+.report-card {
+  background-color: #ffffff;
+  /* --- Moonlit Serenity Tones: Light blue/gray border --- */
+  border: 1px solid #ADBBDA; /* Light blue/gray */
+  border-radius: 12px;
+  /* --- Moonlit Serenity Tones: Enhanced shadow for cards --- */
+  box-shadow: 0 8px 20px rgba(61, 82, 160, 0.1); /* Softer, slightly larger shadow */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.report-card:hover {
+  transform: translateY(-5px);
+  /* --- Moonlit Serenity Tones: More prominent shadow on hover for cards --- */
+  box-shadow: 0 12px 25px rgba(61, 82, 160, 0.2); /* Clearer lift on hover */
+}
+
+.card-header {
+  /* --- Moonlit Serenity Tones: Darkest blue/purple background for card header with gradient --- */
+  background: linear-gradient(to right, #3D52A0, #4C65B0); /* Subtle gradient for header */
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.card-header h4 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  /* --- Moonlit Serenity Tones: White text with subtle shadow for contrast --- */
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Subtle text shadow */
+}
+
+.report-id-tag {
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: white; /* Ensure ID is visible on dark header */
+}
+
+.card-body {
+  padding: 20px;
+  line-height: 1.6;
+}
+
+.card-body p {
+  margin-bottom: 8px;
+  color: #444; /* Neutral dark gray */
+}
+
+.card-body p:last-child {
+  margin-bottom: 0;
+}
+
+/* Dividers */
+.divider {
+  text-align: center;
+  margin: 30px 0;
+  font-weight: 600;
+  color: #777; /* Neutral gray */
+  position: relative;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 40%;
+  height: 2px; /* Slightly thicker line */
+  /* --- Moonlit Serenity Tones: Light blue/gray line with subtle gradient --- */
+  background: linear-gradient(to right, transparent, #ADBBDA, transparent); /* Subtle gradient */
+}
+
+.divider::before {
+  left: 0;
+}
+
+.divider::after {
+  right: 0;
+}
+
+.small-divider {
+  margin: 15px 0; /* Smaller margin for inner divider */
+}
+
+.small-divider::before, .small-divider::after {
+  width: 30%; /* Shorter lines */
+}
+
+/* Alert Messages */
+.alert-message {
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.alert-message.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.alert-message.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+/* Loading Spinner */
+.loading-spinner {
+  text-align: center;
+  padding: 20px;
+  font-size: 1.1rem;
+  /* --- Moonlit Serenity Tones: Medium blue for loading spinner --- */
+  color: #7091E6; /* Medium blue */
+}
+
+/* No Data Message */
+.no-data-message {
+  text-align: center;
+  color: #6c757d;
+  padding: 20px;
+  font-style: italic;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .marketing-reports-container {
+      margin: 20px;
+      padding: 20px;
+  }
+
+  /* .app-header responsiveness is handled in global.css */
+
+  .page-title {
+      font-size: 1.8rem;
+      margin-bottom: 30px;
+  }
+
+  h3 {
+      font-size: 1.4rem;
+  }
+
+  .input-with-button {
+      flex-direction: column;
+      gap: 10px;
+      max-width: 300px; /* Adjust max width for mobile */
+  }
+
+  .input-with-button input,
+  .generate-button, .fetch-button, .view-all-button {
+      width: 100%; /* Full width on smaller screens */
+      padding: 10px 15px;
+      font-size: 1rem;
+  }
+
+  .report-card-grid {
+      grid-template-columns: 1fr; /* Stack cards on smaller screens */
+      gap: 20px;
+  }
+
+  .card-header h4 {
+      font-size: 1.1rem;
+  }
+
+  .report-id-tag {
+      font-size: 0.8rem;
+      padding: 4px 8px;
+  }
+
+  .card-body p {
+      font-size: 0.95rem;
+  }
+
+  .divider::before,
+  .divider::after {
+      width: 35%;
+  }
+
+  .small-divider::before, .small-divider::after {
+      width: 25%;
+  }
+}
+
+@media (max-width: 480px) {
+  .marketing-reports-container {
+      margin: 10px;
+      padding: 15px;
+  }
+
+  .page-title {
+      font-size: 1.5rem;
+      margin-bottom: 25px;
+  }
+
+  h3 {
+      font-size: 1.2rem;
+  }
+
+  .divider::before,
+  .divider::after {
+      width: 30%;
+  }
+
+  .small-divider::before, .small-divider::after {
+      width: 20%;
+  }
+}

@@ -1,0 +1,89 @@
+<div class="marketing-container">
+    <!-- Header (consistent with other internal pages) -->
+    <header class="app-header">
+      <div class="logo-section">
+        <a routerLink="/dashboard" class="header-logo-link">
+          <img src="assets/crm.png" alt="App Logo" class="logo-image">
+        </a>
+      </div>
+      <div class="header-right">
+        <a routerLink="/marketing" class="dashboard-link-right">Marketing Portal</a>
+        <a routerLink="/dashboard" class="dashboard-link-right">Dashboard</a>
+        <button class="logout-button" (click)="logout()">Logout</button>
+      </div>
+    </header>
+  
+    <h1 class="page-title">Marketing via Email</h1>
+  
+    <!-- Status Messages -->
+    <div *ngIf="isLoading" class="loading-spinner">Loading...</div>
+    <div *ngIf="sendEmailMessage" [ngClass]="{'alert-message success': sendEmailSuccess, 'alert-message error': !sendEmailSuccess}" role="alert">
+      {{ sendEmailMessage }}
+    </div>
+  
+    <!-- Send Email Campaign Form Section -->
+    <div class="form-section">
+      <h2 class="section-title">Send Email Campaign</h2>
+      <form [formGroup]="sendEmailForm" (ngSubmit)="sendEmailCampaign()">
+        <div class="form-group">
+          <label for="campaignId">Select Campaign:</label>
+          <select id="campaignId" formControlName="campaignId">
+            <option [ngValue]="null" disabled>-- Select an Email Campaign --</option>
+            <option *ngFor="let campaign of campaigns | filterCampaigns:'EMAIL'" [ngValue]="campaign.campaignID">
+              {{ campaign.campaignID }} - {{ campaign.name }} ({{ campaign.startDate }} to {{ campaign.endDate }})
+            </option>
+          </select>
+          <div *ngIf="sendEmailForm.get('campaignId')?.invalid && sendEmailForm.get('campaignId')?.touched" class="error-text">
+            Campaign is required.
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="customerIds">Select Customers (Ctrl+Click for multiple):</label>
+          <select id="customerIds" formControlName="customerIds" multiple size="5">
+            <option *ngFor="let customer of customers" [ngValue]="customer.id">
+              {{ customer.id }} - {{ customer.name }} ({{ customer.emailId }})
+            </option>
+          </select>
+          <div *ngIf="sendEmailForm.get('customerIds')?.invalid && sendEmailForm.get('customerIds')?.touched" class="error-text">
+            At least one customer is required.
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="productId">Select Product (Optional for personalization):</label>
+          <select id="productId" formControlName="productId">
+            <option [ngValue]="null">-- Select a Product --</option>
+            <option *ngFor="let product of products" [ngValue]="product.id">
+              {{ product.id }} - {{ product.productName }} ({{ product.productBrandName }})
+            </option>
+          </select>
+        </div>
+  
+        <div class="form-group">
+          <label for="subjectTemplate">Subject Template:</label>
+          <input type="text" id="subjectTemplate" formControlName="subjectTemplate" placeholder="e.g., Special Offer for [Product Name]!">
+          <div *ngIf="sendEmailForm.get('subjectTemplate')?.invalid && sendEmailForm.get('subjectTemplate')?.touched" class="error-text">
+            Subject is required.
+          </div>
+          <small class="template-hint">Use backend variables like <code>{{ '{' }}product.name{{ '}' }}</code>, <code>{{ '{' }}product.price{{ '}' }}</code>, etc.</small>
+        </div>
+  
+        <div class="form-group">
+          <label for="bodyTemplate">Body Template:</label>
+          <textarea id="bodyTemplate" formControlName="bodyTemplate" rows="8" placeholder="Dear Customer, check out our new [Product Name]! It costs [Product Price]."></textarea>
+          <div *ngIf="sendEmailForm.get('bodyTemplate')?.invalid && sendEmailForm.get('bodyTemplate')?.touched" class="error-text">
+            Body is required.
+          </div>
+          <small class="template-hint">Use backend variables like <code>{{ '{' }}product.name{{ '}' }}</code>, <code>{{ '{' }}product.description{{ '}' }}</code>, <code>{{ '{' }}product.price{{ '}' }}</code>, etc.</small>
+        </div>
+  
+        <div class="form-actions">
+          <button type="submit" [disabled]="sendEmailForm.invalid || isLoading" class="submit-button">
+            Send Email Campaign
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  

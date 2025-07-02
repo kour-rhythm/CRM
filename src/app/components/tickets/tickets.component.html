@@ -1,0 +1,105 @@
+<div class="tickets-management-container">
+  <header class="app-header">
+    <div class="logo-section">
+      <!-- Assuming you have a logo, otherwise remove this div -->
+      <a href="#" class="header-logo-link">
+        <!-- Placeholder for a logo image if you have one -->
+        <img src="assets/crm.png" alt="App Logo" class="logo-image">
+      </a>
+    </div>
+    <div class="header-right">
+      <!-- Assuming a dashboard link might be present -->
+      <a routerLink="/dashboard" class="dashboard-link-right">Dashboard</a>
+      <button (click)="logout()" class="logout-button">Logout</button>
+    </div>
+  </header>
+
+  <h2>Manage Support Tickets</h2>
+
+  <!-- Section to Fetch and Display Tickets -->
+  <section class="form-section">
+    <h3>View Tickets</h3>
+    <div class="input-group">
+      <label for="ticketIdInput">Enter Ticket ID to view specific ticket:</label>
+      <div class="input-with-button">
+        <input type="number" id="ticketIdInput" [(ngModel)]="ticketIdInput" placeholder="e.g., 123" />
+        <button (click)="fetchTicketFromInput()" class="fetch-button">Fetch Ticket</button>
+      </div>
+      <!-- This line must use 'isNumberNaN' as defined in your component.ts -->
+      <div *ngIf="ticketIdInput !== null && isNumberNaN(ticketIdInput)" class="error-text">Please enter a valid number for Ticket ID.</div>
+    </div>
+
+    <div class="divider">OR</div>
+
+    <div class="view-all-tickets-section">
+      <button (click)="showAllTickets()" class="view-all-button">Show All Tickets</button>
+    </div>
+  </section>
+
+  <!-- Section to Update Ticket Status -->
+  <section class="form-section">
+    <h3>Update Ticket Status</h3>
+    <form #updateStatusForm="ngForm" (ngSubmit)="updateTicketStatus()" novalidate>
+      <div class="form-group">
+        <label for="ticketIdForUpdate">Ticket ID:</label>
+        <input type="number" id="ticketIdForUpdate" name="ticketIdForUpdate" [(ngModel)]="ticketIdForUpdate" required placeholder="Enter Ticket ID" />
+        <div *ngIf="updateStatusForm.controls['ticketIdForUpdate']?.invalid && (updateStatusForm.controls['ticketIdForUpdate']?.dirty || updateStatusForm.controls['ticketIdForUpdate']?.touched)" class="error-text">
+          Ticket ID is required and must be a number.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="newStatusForUpdate">New Status:</label>
+        <select id="newStatusForUpdate" name="newStatusForUpdate" [(ngModel)]="newStatusForUpdate" required>
+          <option [ngValue]="null" disabled>Select a status</option>
+          <option *ngFor="let status of ticketStatuses" [ngValue]="status">{{ status }}</option>
+        </select>
+        <div *ngIf="updateStatusForm.controls['newStatusForUpdate']?.invalid && (updateStatusForm.controls['newStatusForUpdate']?.dirty || updateStatusForm.controls['newStatusForUpdate']?.touched)" class="error-text">
+          New Status is required.
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" [disabled]="updateStatusForm.invalid || isLoading" class="update-button">Update Status</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- Messages Display -->
+  <div *ngIf="errorMessage" class="alert-message error">
+    {{ errorMessage }}
+  </div>
+  <div *ngIf="successMessage" class="alert-message success">
+    {{ successMessage }}
+  </div>
+  <div *ngIf="isLoading" class="loading-spinner">Loading...</div>
+
+  <!-- Display Area for Tickets -->
+  <section *ngIf="displayedTickets.length > 0" class="ticket-display-section">
+    <h3>Displayed Tickets</h3>
+    <div class="ticket-card-grid">
+      <div *ngFor="let ticket of displayedTickets" class="ticket-card">
+        <div class="card-header">
+          <h4>Ticket #{{ ticket.id }}</h4>
+          <span class="card-status" [ngClass]="{
+            'status-open': ticket.status === 'OPEN',
+            'status-assigned': ticket.status === 'ASSIGNED',
+            'status-in-progress': ticket.status === 'IN_PROGRESS',
+            'status-resolved': ticket.status === 'RESOLVED',
+            'status-closed': ticket.status === 'CLOSED'
+          }">{{ ticket.status }}</span>
+        </div>
+        <div class="card-body">
+          <p><strong>Issue:</strong> {{ ticket.issue }}</p>
+          <p><strong>Customer ID:</strong> {{ ticket.customerId }}</p>
+          <p><strong>Product ID:</strong> {{ ticket.productId }}</p>
+          <p><strong>Created At:</strong> {{ ticket.createdAt | date:'short' }}</p>
+          <p *ngIf="ticket.updatedAt"><strong>Updated At:</strong> {{ ticket.updatedAt | date:'short' }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div *ngIf="!isLoading && displayedTickets.length === 0 && (ticketIdInput !== null || errorMessage)" class="info-text">
+    No tickets to display or ticket not found.
+  </div>
+</div>

@@ -1,0 +1,98 @@
+<div class="marketing-reports-container">
+    <!-- Header (consistent with other internal pages, including a back button) -->
+    <header class="app-header">
+      <div class="logo-section">
+        <a routerLink="/dashboard" class="header-logo-link">
+          <img src="assets/crm.png" alt="App Logo" class="logo-image">
+        </a>
+      </div>
+      <div class="header-right">
+        <a class="dashboard-link-right" routerLink="/reports">Reports Portal</a>
+        <a routerLink="/dashboard" class="dashboard-link-right">Dashboard</a>
+        <button class="logout-button" (click)="logout()">Logout</button>
+      </div>
+    </header>
+  
+    <h1 class="page-title">Marketing Reports</h1>
+  
+    <!-- Status Messages -->
+    <div *ngIf="isLoading" class="loading-spinner">Loading/Generating Reports...</div>
+    <div *ngIf="errorMessage" class="alert-message error">{{ errorMessage }}</div>
+    <div *ngIf="successMessage" class="alert-message success">{{ successMessage }}</div>
+  
+    <!-- Report Generation Section -->
+    <div class="report-section generate-report-section">
+      <h3>Generate New Marketing Report</h3>
+      <p class="section-description">Fetch the latest data from a campaign in the Marketing Module and save it as a report.</p>
+      <div class="input-group">
+        <label for="campaignIdToGenerate">Enter External Campaign ID:</label>
+        <div class="input-with-button">
+          <input type="number" id="campaignIdToGenerate" name="campaignIdToGenerate"
+                 [(ngModel)]="campaignIdToGenerate" placeholder="e.g., 456">
+          <button type="button" (click)="generateNewMarketingReport()" [disabled]="!campaignIdToGenerate || isLoading" class="generate-button">
+            Generate & Save
+          </button>
+        </div>
+      </div>
+    </div>
+  
+    <div class="divider">OR</div>
+  
+    <!-- View Saved Reports Section -->
+    <div class="report-section view-saved-reports-section">
+      <h3>View Saved Marketing Reports</h3>
+      <p class="section-description">Retrieve reports that have already been generated and saved locally.</p>
+  
+      <!-- Input for Specific Saved Report ID -->
+      <div class="input-group">
+        <label for="savedReportIdInput">Enter Saved Campaign ID:</label>
+        <div class="input-with-button">
+          <input type="number" id="savedReportIdInput" name="savedReportIdInput"
+                 [(ngModel)]="savedReportIdInput" placeholder="e.g., 456">
+          <button type="button" (click)="fetchSpecificSavedReport()" [disabled]="!savedReportIdInput || isLoading" class="fetch-button">
+            Get Saved Report
+          </button>
+        </div>
+        <div *ngIf="savedReportIdInput === null && !isLoading && displayedReports.length === 0 && !errorMessage" class="info-text">
+          Enter a Campaign ID to view a specific saved report.
+        </div>
+      </div>
+  
+      <div class="divider small-divider">OR</div>
+  
+      <!-- Button to View All Saved Reports -->
+      <div class="view-all-reports-section">
+        <button type="button" (click)="showAllSavedMarketingReports()" [disabled]="isLoading" class="view-all-button">
+          View All Saved Marketing Reports
+        </button>
+      </div>
+  
+      <!-- Cards for Displayed Marketing Reports -->
+      <div class="report-card-grid mt-4">
+        <ng-container *ngIf="displayedReports.length > 0; else noReports">
+          <div class="report-card" *ngFor="let report of displayedReports">
+            <div class="card-header">
+              <h4>Campaign ID: {{ report.campaignId }}</h4>
+              <span class="report-id-tag">Report Generated: {{ report.generatedAt | date:'medium' }}</span>
+            </div>
+            <div class="card-body">
+              <p><strong>Name:</strong> {{ report.name }}</p>
+              <p><strong>Type:</strong> {{ report.type }}</p>
+              <p><strong>Starts:</strong> {{ report.startDate | date:'mediumDate' }}</p>
+              <p><strong>Ends:</strong> {{ report.endDate | date:'mediumDate' }}</p>
+              <p *ngIf="report.mailerSendCampaignId"><strong>MailerSend ID:</strong> {{ report.mailerSendCampaignId }}</p>
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #noReports>
+          <p class="no-data-message" *ngIf="!isLoading && !errorMessage">
+            No marketing reports to display.
+          </p>
+          <p class="no-data-message" *ngIf="errorMessage">
+            {{ errorMessage }}
+          </p>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  

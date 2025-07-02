@@ -1,0 +1,102 @@
+<div class="agent-management-container">
+  <!-- Agent Page Header -->
+  <header class="app-header">
+    <div class="logo-section">
+      <!-- Your Logo - Changed to angular-logo.png for consistency -->
+      <a routerLink="/dashboard" class="header-logo-link">
+        <img src="assets/crm.png" alt="App Logo" class="logo-image"><!-- Added title for consistency with dashboard header -->
+      </a>
+    </div>
+    <div class="header-right">
+      <!-- Dashboard Link -->
+      <a routerLink="/dashboard" class="dashboard-link-right">Dashboard</a>
+      <!-- Logout Button - Changed from <a> to <button> and added (click) handler -->
+      <button class="logout-button" (click)="logout()">Logout</button>
+    </div>
+  </header>
+
+  <h1 class="page-title">Agent Management</h1>
+
+  <!-- Status Messages (consistent pattern) -->
+  <div *ngIf="isLoading" class="loading-spinner">Loading...</div>
+  <div *ngIf="addAgentMessage" [ngClass]="{'alert-message success': addAgentSuccess, 'alert-message error': !addAgentSuccess}" role="alert">
+    {{ addAgentMessage }}
+  </div>
+  <div *ngIf="specificAgentMessage && !addAgentMessage" class="alert-message error">
+    {{ specificAgentMessage }}
+  </div>
+
+  <!-- Add Agent Form Section -->
+  <div class="form-section">
+    <h2 class="section-title">Add New Agent</h2>
+    <form [formGroup]="agentForm" (ngSubmit)="addAgent()">
+      <div class="form-group">
+        <label for="name">Agent Name:</label>
+        <input type="text" id="name" formControlName="name" placeholder="Enter agent name">
+        <div *ngIf="agentForm.get('name')?.invalid && agentForm.get('name')?.touched" class="error-text">
+          Name is required.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Agent Email:</label>
+        <input type="email" id="email" formControlName="email" placeholder="Enter agent email">
+        <div *ngIf="agentForm.get('email')?.invalid && agentForm.get('email')?.touched" class="error-text">
+          <span *ngIf="agentForm.get('email')?.errors?.['required']">Email is required.</span>
+          <span *ngIf="agentForm.get('email')?.errors?.['email']">Enter a valid email address.</span>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button type="submit" [disabled]="agentForm.invalid || isLoading" class="submit-button">
+          Add Agent
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Display Agents Section -->
+  <div class="display-section">
+    <h2 class="section-title">View Agents</h2>
+    <div class="display-options">
+      <label for="displayOption">Display Option:</label>
+      <select id="displayOption" [(ngModel)]="selectedDisplayOption" (change)="onDisplayOptionChange()">
+        <option value="all">All Agents</option>
+        <option value="specific">Specific Agent (by ID)</option>
+      </select>
+    </div>
+
+    <!-- Specific Agent Input (conditionally displayed) -->
+    <div *ngIf="selectedDisplayOption === 'specific'" class="input-group-specific mt-3">
+      <label for="specificAgentId">Agent ID:</label>
+      <div class="input-with-button">
+        <input type="number" id="specificAgentId" [(ngModel)]="specificAgentId" placeholder="Enter Agent ID">
+        <button (click)="getSpecificAgent()" [disabled]="!specificAgentId || isLoading" class="fetch-button">
+          Get Agent
+        </button>
+      </div>
+    </div>
+
+    <!-- Agent Cards Display -->
+    <div class="agent-card-grid mt-6">
+      <ng-container *ngIf="agents$ | async as agents; else loading">
+        <ng-container *ngIf="agents.length > 0; else noAgents">
+          <div *ngFor="let agent of agents" class="agent-card">
+            <div class="card-header">
+              <h3>{{ agent.name }}</h3>
+              <span class="card-id">ID: {{ agent.id }}</span>
+            </div>
+            <div class="card-body">
+              <p><strong>Email:</strong> {{ agent.email }}</p>
+              <p><strong>Assigned Tickets:</strong> {{ agent.currentAssignedTicketsCount || 0 }}</p>
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #noAgents>
+          <div class="no-data-message">No agents to display.</div>
+        </ng-template>
+      </ng-container>
+      <ng-template #loading>
+        <div class="loading-spinner">Loading agents...</div>
+      </ng-template>
+    </div>
+  </div>
+</div>

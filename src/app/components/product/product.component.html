@@ -1,0 +1,173 @@
+<div class="product-management-container">
+  <header class="app-header">
+    <div class="logo-section">
+      <!-- Your Logo - Changed to angular-logo.png for consistency -->
+      <a routerLink="/dashboard" class="header-logo-link">
+        <img src="assets/crm.png" alt="App Logo" class="logo-image"><!-- Added title for consistency with dashboard header -->
+      </a>
+    </div>
+    <div class="header-right">
+      <!-- Dashboard Link -->
+      <a routerLink="/dashboard" class="dashboard-link-right">Dashboard</a>
+      <!-- Logout Button - Changed from <a> to <button> and added (click) handler -->
+      <button class="logout-button" (click)="logout()">Logout</button>
+    </div>
+  </header>
+    <h2>Product Management</h2>
+  
+    <!-- Status Messages -->
+    <div *ngIf="isLoading" class="loading-spinner">Loading...</div>
+    <div *ngIf="errorMessage" class="alert-message error">{{ errorMessage }}</div>
+    <div *ngIf="successMessage" class="alert-message success">{{ successMessage }}</div>
+  
+    <!-- Product Form -->
+    <div class="form-section">
+      <h3>Add New Product</h3>
+      <form #productForm="ngForm" (ngSubmit)="onSubmit()">
+        <!-- Customer ID dropdown to associate product -->
+        <div class="form-group">
+          <label for="customerIdForProduct">Associate with Customer:</label>
+          <select id="customerIdForProduct" name="customerIdForProduct" [(ngModel)]="customerIdForProduct" required #customerIdField="ngModel">
+            <option [ngValue]="null" disabled>-- Select a Customer --</option>
+            <option *ngFor="let cust of availableCustomers" [ngValue]="cust.id">
+              {{ cust.id }} - {{ cust.name }}
+            </option>
+          </select>
+          <div *ngIf="customerIdField.invalid && (customerIdField.dirty || customerIdField.touched)" class="error-text">
+            <div *ngIf="customerIdField.errors?.['required']">Customer association is required.</div>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="productName">Product Name:</label>
+          <input type="text" id="productName" name="productName" [(ngModel)]="product.productName" required #productNameField="ngModel">
+          <div *ngIf="productNameField.invalid && (productNameField.dirty || productNameField.touched)" class="error-text">
+            <div *ngIf="productNameField.errors?.['required']">Product Name is required.</div>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="productBrandName">Brand Name:</label>
+          <input type="text" id="productBrandName" name="productBrandName" [(ngModel)]="product.productBrandName" required #productBrandNameField="ngModel">
+          <div *ngIf="productBrandNameField.invalid && (productBrandNameField.dirty || productBrandNameField.touched)" class="error-text">
+            <div *ngIf="productBrandNameField.errors?.['required']">Brand Name is required.</div>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="productBrandDescription">Description:</label>
+          <textarea id="productBrandDescription" name="productBrandDescription" [(ngModel)]="product.productBrandDescription" required rows="3" #productBrandDescriptionField="ngModel"></textarea>
+          <div *ngIf="productBrandDescriptionField.invalid && (productBrandDescriptionField.dirty || productBrandDescriptionField.touched)" class="error-text">
+            <div *ngIf="productBrandDescriptionField.errors?.['required']">Description is required.</div>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="productPrice">Price:</label>
+          <input type="number" id="productPrice" name="productPrice" [(ngModel)]="product.productPrice" required min="0" #productPriceField="ngModel">
+          <div *ngIf="productPriceField.invalid && (productPriceField.dirty || productPriceField.touched)" class="error-text">
+            <div *ngIf="productPriceField.errors?.['required']">Price is required.</div>
+            <div *ngIf="productPriceField.errors?.['min']">Price cannot be negative.</div>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="productReviewOutOfFive">Review (1-5):</label>
+          <input type="number" id="productReviewOutOfFive" name="productReviewOutOfFive" [(ngModel)]="product.productReviewOutOfFive" required min="1" max="5" #productReviewOutOfFiveField="ngModel">
+          <div *ngIf="productReviewOutOfFiveField.invalid && (productReviewOutOfFiveField.dirty || productReviewOutOfFiveField.touched)" class="error-text">
+            <div *ngIf="productReviewOutOfFiveField.errors?.['required']">Review is required.</div>
+            <div *ngIf="productReviewOutOfFiveField.errors?.['min']">Review must be at least 1.</div>
+            <div *ngIf="productReviewOutOfFiveField.errors?.['max']">Review cannot be more than 5.</div>
+          </div>
+        </div>
+  
+        <div class="form-actions">
+          <button type="submit" [disabled]="productForm.invalid || isLoading" class="submit-button">Add Product</button>
+          <button type="button" (click)="resetForm()" class="reset-button">Reset</button>
+        </div>
+      </form>
+    </div>
+  
+    <!-- Product Display Section -->
+    <div class="product-display-section">
+      <h3>View Products</h3>
+  
+      <!-- Input for Specific Product ID -->
+      <div class="input-group">
+        <label for="productIdInput">Enter Product ID:</label>
+        <div class="input-with-button">
+          <input type="number" id="productIdInput" name="productIdInput" [(ngModel)]="productIdInput" placeholder="e.g., 123">
+          <button type="button" (click)="fetchProductFromInput()" [disabled]="!productIdInput || isLoading" class="fetch-button">Get Product</button>
+        </div>
+        <div *ngIf="productIdInput === null && !isLoading && displayedSpecificProduct.length === 0 && !errorMessage" class="info-text">
+          Enter an ID above to view a specific product.
+        </div>
+      </div>
+  
+      <!-- Table for Specific Product -->
+      <div class="product-list-container mt-4">
+        <table class="product-table" *ngIf="displayedSpecificProduct.length === 1; else noSpecificProduct">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Brand</th>
+              <th>Price</th>
+              <th>Review</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let prod of displayedSpecificProduct">
+              <td>{{ prod.id }}</td>
+              <td>{{ prod.productName }}</td>
+              <td>{{ prod.productBrandName }}</td>
+              <td>{{ prod.productPrice | currency:'USD':'symbol':'1.2-2' }}</td>
+              <td>{{ prod.productReviewOutOfFive }} / 5</td>
+            </tr>
+          </tbody>
+        </table>
+        <ng-template #noSpecificProduct>
+          <p class="no-data-message" *ngIf="errorMessage || (productIdInput !== null && displayedSpecificProduct.length === 0 && !isLoading)">
+            {{ errorMessage ? errorMessage : 'No specific product found with that ID.' }}
+          </p>
+        </ng-template>
+      </div>
+  
+      <div class="divider">OR</div>
+  
+      <!-- Button to View All Products -->
+      <div class="view-all-products-section">
+        <button type="button" (click)="showAllProducts()" [disabled]="isLoading" class="view-all-button">View All Products</button>
+      </div>
+  
+      <!-- Table for All Products -->
+      <div class="product-list-container mt-4">
+        <table class="product-table" *ngIf="displayedAllProducts.length > 0; else noAllProducts">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Brand</th>
+              <th>Description</th>
+              <th>Price</th>
+              <th>Review</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let prod of displayedAllProducts">
+              <td>{{ prod.id }}</td>
+              <td>{{ prod.productName }}</td>
+              <td>{{ prod.productBrandName }}</td>
+              <td>{{ prod.productBrandDescription }}</td>
+              <td>{{ prod.productPrice | currency:'USD':'symbol':'1.2-2' }}</td>
+              <td>{{ prod.productReviewOutOfFive }} / 5</td>
+            </tr>
+          </tbody>
+        </table>
+        <ng-template #noAllProducts>
+          <p class="no-data-message" *ngIf="!isLoading">No products available in the database.</p>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  

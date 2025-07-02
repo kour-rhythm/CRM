@@ -1,0 +1,422 @@
+/* General container styling - consistent with customer.component.css */
+.product-management-container {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 30px;
+  background-color: #ffffff; /* White background for contrast */
+  border-radius: 15px;
+  /* --- Moonlit Serenity Tones: Enhanced shadow for a floating effect --- */
+  box-shadow: 0 15px 35px rgba(61, 82, 160, 0.15); /* Softer, wider shadow */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+/* Removed duplicated .app-header and related styles from here, as they should be in global.css */
+/* These styles were causing conflicts with the global header/navbar styling. */
+
+h2 {
+  text-align: center;
+  /* --- Moonlit Serenity Tones: Darkest blue/purple for main headings with text shadow --- */
+  color: #3D52A0; /* Darkest blue/purple */
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); /* Subtle text shadow */
+  margin-bottom: 30px;
+  font-size: 2.2rem;
+  font-weight: 700;
+}
+
+h3 {
+  text-align: center; /* Centered for a cleaner look */
+  /* --- Moonlit Serenity Tones: Medium blue accent for sub-headings with text shadow --- */
+  color: #7091E6; /* Medium blue */
+  text-shadow: 0.5px 0.5px 1px rgba(0, 0, 0, 0.1); /* Subtle text shadow */
+  margin-bottom: 20px;
+  /* --- Moonlit Serenity Tones: Light blue/gray border, slightly thicker --- */
+  border-bottom: 2px solid #ADBBDA; /* Light blue/gray, thicker line */
+  padding-bottom: 10px;
+  font-size: 1.6rem;
+}
+
+/* Form Section Styling */
+.form-section {
+  margin-bottom: 40px;
+  padding: 25px;
+  /* --- Moonlit Serenity Tones: Light blue/gray border --- */
+  border: 1px solid #ADBBDA; /* Light blue/gray */
+  border-radius: 10px;
+  /* --- Moonlit Serenity Tones: Very light purple/gray background for forms --- */
+  background-color: #F8F5FB; /* A very subtle off-white/purple-gray */
+  /* --- Moonlit Serenity Tones: Subtle box shadow for lift --- */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); /* Slight lift */
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #555;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="number"],
+.form-group textarea, /* Added textarea styling */
+.form-group select, /* Added select styling for customer dropdown */
+.input-with-button input[type="number"] {
+  width: 100%;
+  padding: 12px;
+  /* --- Moonlit Serenity Tones: Muted blue/gray border for inputs --- */
+  border: 1px solid #8697C4; /* Muted blue/gray */
+  border-radius: 8px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus,
+.input-with-button input:focus {
+  /* --- Moonlit Serenity Tones: Darkest blue/purple border on focus --- */
+  border-color: #3D52A0; /* Darkest blue/purple */
+  /* --- Moonlit Serenity Tones: Muted blue/gray shadow on focus, slightly more pronounced --- */
+  box-shadow: 0 0 0 4px rgba(134, 151, 196, 0.3); /* Clearer focus indication */
+  outline: none;
+}
+
+.error-text {
+  color: #dc3545; /* Standard red for error, kept for clarity */
+  font-size: 0.85rem;
+  margin-top: 5px;
+}
+
+.info-text {
+  color: #6c757d; /* Neutral gray */
+  font-size: 0.9rem;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.form-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: flex-end;
+  margin-top: 25px;
+}
+
+.submit-button, .reset-button {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Initial subtle shadow */
+}
+
+.submit-button {
+  /* --- Moonlit Serenity Tones: Medium blue for submit button with gradient --- */
+  background: linear-gradient(to right, #7091E6, #8697C4); /* Gradient for depth */
+  color: white;
+}
+
+.submit-button:hover:not(:disabled) {
+  /* --- Moonlit Serenity Tones: Darkest blue/purple on hover, more prominent shadow --- */
+  background-color: #3D52A0; /* Darkest blue/purple */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(61, 82, 160, 0.4); /* Clearer shadow on hover */
+}
+
+.submit-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.reset-button {
+  /* --- Moonlit Serenity Tones: Muted blue/gray for reset button with gradient --- */
+  background: linear-gradient(to right, #8697C4, #ADBBDA); /* Gradient for depth */
+  color: white;
+}
+
+.reset-button:hover {
+  /* --- Moonlit Serenity Tones: Darkest blue/purple on hover for reset, more prominent shadow --- */
+  background-color: #3D52A0; /* Darkest blue/purple */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(61, 82, 160, 0.4); /* Clearer shadow on hover */
+}
+
+/* Product Display Section Styling */
+.product-display-section {
+  margin-top: 40px;
+  padding: 25px;
+  /* --- Moonlit Serenity Tones: Light blue/gray border --- */
+  border: 1px solid #ADBBDA; /* Light blue/gray */
+  border-radius: 10px;
+  /* --- Moonlit Serenity Tones: Very light purple/gray background for display section --- */
+  background-color: #F8F5FB; /* A very subtle off-white/purple-gray */
+  /* --- Moonlit Serenity Tones: Subtle box shadow for lift --- */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); /* Slight lift */
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #555;
+}
+
+.input-with-button {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.input-with-button input[type="number"] {
+  width: 100%; /* Ensure full width within its flex container */
+  padding: 12px;
+  /* --- Moonlit Serenity Tones: Muted blue/gray border for inputs --- */
+  border: 1px solid #8697C4; /* Muted blue/gray */
+  border-radius: 8px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.input-with-button input:focus {
+  /* --- Moonlit Serenity Tones: Darkest blue/purple border on focus --- */
+  border-color: #3D52A0; /* Darkest blue/purple */
+  /* --- Moonlit Serenity Tones: Muted blue/gray shadow on focus, slightly more pronounced --- */
+  box-shadow: 0 0 0 4px rgba(134, 151, 196, 0.3); /* Clearer focus indication */
+  outline: none;
+}
+
+.fetch-button {
+  padding: 12px 20px;
+  /* --- Moonlit Serenity Tones: Medium blue for fetch button with gradient --- */
+  background: linear-gradient(to right, #7091E6, #8697C4); /* Gradient for depth */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Initial subtle shadow */
+}
+
+.fetch-button:hover:not(:disabled) {
+  /* --- Moonlit Serenity Tones: Darkest blue/purple on hover, more prominent shadow --- */
+  background-color: #3D52A0; /* Darkest blue/purple */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(61, 82, 160, 0.4); /* Clearer shadow on hover */
+}
+
+.fetch-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Divider for "OR" */
+.divider {
+  text-align: center;
+  margin: 30px 0;
+  font-weight: 600;
+  color: #777; /* Neutral gray */
+  position: relative;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 40%;
+  height: 2px; /* Slightly thicker line */
+  /* --- Moonlit Serenity Tones: Light blue/gray line with subtle gradient --- */
+  background: linear-gradient(to right, transparent, #ADBBDA, transparent); /* Subtle gradient */
+}
+
+.divider::before {
+  left: 0;
+}
+
+.divider::after {
+  right: 0;
+}
+
+/* View All Products Section */
+.view-all-products-section {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.view-all-button {
+  padding: 12px 25px;
+  /* --- Moonlit Serenity Tones: Muted blue/gray for view all button with gradient --- */
+  background: linear-gradient(to right, #8697C4, #ADBBDA); /* Gradient for depth */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Initial subtle shadow */
+}
+
+.view-all-button:hover:not(:disabled) {
+  /* --- Moonlit Serenity Tones: Darkest blue/purple on hover, more prominent shadow --- */
+  background-color: #3D52A0; /* Darkest blue/purple */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(61, 82, 160, 0.4); /* Clearer shadow on hover */
+}
+
+.view-all-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Table Styling */
+.product-list-container {
+  overflow-x: auto;
+  margin-top: 20px;
+}
+
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.product-table th, .product-table td {
+  border: 1px solid #ddd; /* Neutral border */
+  padding: 12px;
+  text-align: left;
+}
+
+.product-table th {
+  /* --- Moonlit Serenity Tones: Darkest blue/purple background for table headers with gradient --- */
+  background: linear-gradient(to right, #3D52A0, #4C65B0); /* Gradient for header */
+  /* --- Moonlit Serenity Tones: White text for table header text --- */
+  color: white;
+  font-weight: 600;
+}
+
+.product-table tbody tr:nth-child(even) {
+  /* --- Moonlit Serenity Tones: Very light purple/gray for even rows, slightly warmer --- */
+  background-color: #F8F5FB; /* A very light neutral purple/gray */
+}
+
+.product-table tbody tr:hover {
+  /* --- Moonlit Serenity Tones: Slightly darker light purple/gray on hover, more pronounced --- */
+  background-color: #EEEBF7; /* A slightly deeper light purple/gray */
+}
+
+.no-data-message {
+  text-align: center;
+  color: #6c757d; /* Neutral gray */
+  padding: 20px;
+  font-style: italic;
+}
+
+/* Alert Messages */
+.alert-message {
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.alert-message.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.alert-message.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+/* Loading Spinner */
+.loading-spinner {
+  text-align: center;
+  padding: 20px;
+  font-size: 1.1rem;
+  /* --- Moonlit Serenity Tones: Medium blue for loading spinner --- */
+  color: #7091E6; /* Medium blue */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .product-management-container {
+      margin: 20px;
+      padding: 20px;
+  }
+
+  h2 {
+      font-size: 1.8rem;
+  }
+
+  h3 {
+      font-size: 1.4rem;
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select,
+  .input-with-button input {
+      padding: 10px;
+      font-size: 0.95rem;
+  }
+
+  .form-actions {
+      flex-direction: column;
+      gap: 10px;
+  }
+
+  .submit-button, .reset-button, .fetch-button, .view-all-button {
+      width: 100%;
+      padding: 10px 15px;
+      font-size: 1rem;
+  }
+
+  .product-table th, .product-table td {
+      padding: 8px;
+      font-size: 0.9rem;
+  }
+
+  .divider::before,
+  .divider::after {
+      width: 35%;
+  }
+}
+
+@media (max-width: 480px) {
+  .product-management-container {
+      margin: 10px;
+      padding: 15px;
+  }
+
+  h2 {
+      font-size: 1.5rem;
+  }
+
+  h3 {
+      font-size: 1.2rem;
+  }
+
+  .divider::before,
+  .divider::after {
+      width: 30%;
+  }
+}

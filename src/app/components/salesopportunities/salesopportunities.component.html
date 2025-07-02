@@ -1,0 +1,200 @@
+<div class="sales-opportunities-management-container">
+  <header class="app-header">
+    <div class="logo-section">
+      <!-- Your Logo - Changed to angular-logo.png for consistency -->
+      <a routerLink="/dashboard" class="header-logo-link">
+        <img src="assets/crm.png" alt="App Logo" class="logo-image"><!-- Added title for consistency with dashboard header -->
+      </a>
+    </div>
+    <div class="header-right">
+      <!-- Dashboard Link -->
+      <a routerLink="/dashboard" class="dashboard-link-right">Dashboard</a>
+      <!-- Logout Button - Changed from <a> to <button> and added (click) handler -->
+      <button class="logout-button" (click)="logout()">Logout</button>
+    </div>
+  </header>
+  <h2>Sales Opportunities Management</h2>
+
+  <!-- Status Messages -->
+  <div *ngIf="isLoading" class="loading-spinner">Loading...</div>
+  <div *ngIf="errorMessage" class="alert-message error">{{ errorMessage }}</div>
+  <div *ngIf="successMessage" class="alert-message success">{{ successMessage }}</div>
+
+  <!-- Sales Opportunity Form for Creation -->
+  <div class="form-section">
+    <h3>Add New Sales Opportunity</h3>
+    <form #opportunityForm="ngForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name">Opportunity Name:</label>
+        <input type="text" id="name" name="name" [(ngModel)]="opportunity.name" required #nameField="ngModel">
+        <div *ngIf="nameField.invalid && (nameField.dirty || nameField.touched)" class="error-text">
+          <div *ngIf="nameField.errors?.['required']">Opportunity Name is required.</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="stage">Stage:</label>
+        <select id="stage" name="stage" [(ngModel)]="opportunity.stage" required #stageField="ngModel">
+          <option [ngValue]="null" disabled>-- Select Stage --</option>
+          <option *ngFor="let stage of opportunityStages" [ngValue]="stage">{{ stage }}</option>
+        </select>
+        <div *ngIf="stageField.invalid && (stageField.dirty || stageField.touched)" class="error-text">
+          <div *ngIf="stageField.errors?.['required']">Stage is required.</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount" name="amount" [(ngModel)]="opportunity.amount" min="0" #amountField="ngModel">
+        <div *ngIf="amountField.invalid && (amountField.dirty || amountField.touched)" class="error-text">
+          <div *ngIf="amountField.errors?.['min']">Amount cannot be negative.</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="closeDate">Close Date:</label>
+        <input type="date" id="closeDate" name="closeDate" [(ngModel)]="opportunity.closeDate" #closeDateField="ngModel">
+      </div>
+
+      <div class="form-group">
+        <label for="leadSource">Lead Source:</label>
+        <input type="text" id="leadSource" name="leadSource" [(ngModel)]="opportunity.leadSource" required #leadSourceField="ngModel">
+        <div *ngIf="leadSourceField.invalid && (leadSourceField.dirty || leadSourceField.touched)" class="error-text">
+          <div *ngIf="leadSourceField.errors?.['required']">Lead Source is required.</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="notes">Notes:</label>
+        <textarea id="notes" name="notes" [(ngModel)]="opportunity.notes" rows="3"></textarea>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" [disabled]="opportunityForm.invalid || isLoading" class="submit-button">Add Opportunity</button>
+        <button type="button" (click)="resetForm()" class="reset-button">Reset</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Section to Update Sales Opportunity -->
+  <div class="form-section">
+    <h3>Update Sales Opportunity</h3>
+    <div class="input-group">
+      <label for="opportunityIdForUpdate">Enter Opportunity ID to Update:</label>
+      <div class="input-with-button">
+        <input type="number" id="opportunityIdForUpdate" name="opportunityIdForUpdate" [(ngModel)]="opportunityIdForUpdate" placeholder="e.g., 123" />
+        <button (click)="fetchOpportunityForUpdate()" [disabled]="opportunityIdForUpdate === null || isNumberNaN(opportunityIdForUpdate)" class="fetch-button">Load for Update</button>
+      </div>
+      <div *ngIf="opportunityIdForUpdate !== null && isNumberNaN(opportunityIdForUpdate)" class="error-text">
+        Please enter a valid number for Opportunity ID.
+      </div>
+      <div *ngIf="opportunityToUpdate === null && opportunityIdForUpdate !== null && !isLoading && !errorMessage" class="info-text mt-2">
+        Enter an ID and click 'Load for Update' to retrieve opportunity details.
+      </div>
+    </div>
+
+    <form #updateOpportunityForm="ngForm" (ngSubmit)="updateOpportunity()" novalidate *ngIf="opportunityToUpdate">
+      <p class="info-text">Updating Opportunity ID: <strong>{{ opportunityToUpdate.id }}</strong></p>
+
+      <div class="form-group">
+        <label for="updateName">Opportunity Name:</label>
+        <input type="text" id="updateName" name="updateName" [(ngModel)]="opportunityToUpdate.name" required #updateNameField="ngModel">
+        <div *ngIf="updateNameField.invalid && (updateNameField.dirty || updateNameField.touched)" class="error-text">
+          <div *ngIf="updateNameField.errors?.['required']">Opportunity Name is required.</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="updateStage">Stage:</label>
+        <select id="updateStage" name="updateStage" [(ngModel)]="opportunityToUpdate.stage" required #updateStageField="ngModel">
+          <option [ngValue]="null" disabled>-- Select Stage --</option>
+          <option *ngFor="let stage of opportunityStages" [ngValue]="stage">{{ stage }}</option>
+        </select>
+        <div *ngIf="updateStageField.invalid && (updateStageField.dirty || updateStageField.touched)" class="error-text">
+          <div *ngIf="updateStageField.errors?.['required']">Stage is required.</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="updateAmount">Amount:</label>
+        <input type="number" id="updateAmount" name="updateAmount" [(ngModel)]="opportunityToUpdate.amount" min="0" #updateAmountField="ngModel">
+        <div *ngIf="updateAmountField.invalid && (updateAmountField.dirty || updateAmountField.touched)" class="error-text">
+          <div *ngIf="updateAmountField.errors?.['min']">Amount cannot be negative.</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="updateCloseDate">Close Date:</label>
+        <input type="date" id="updateCloseDate" name="updateCloseDate" [(ngModel)]="opportunityToUpdate.closeDate" #updateCloseDateField="ngModel">
+      </div>
+
+      <div class="form-group">
+        <label for="updateLeadSource">Lead Source:</label>
+        <input type="text" id="updateLeadSource" name="updateLeadSource" [(ngModel)]="opportunityToUpdate.leadSource" required #updateLeadSourceField="ngModel">
+        <div *ngIf="updateLeadSourceField.invalid && (updateLeadSourceField.dirty || updateLeadSourceField.touched)" class="error-text">
+          <div *ngIf="updateLeadSourceField.errors?.['required']">Lead Source is required.</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="updateNotes">Notes:</label>
+        <textarea id="updateNotes" name="updateNotes" [(ngModel)]="opportunityToUpdate.notes" rows="3"></textarea>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" [disabled]="updateOpportunityForm.invalid || isLoading" class="update-button">Perform Update</button>
+        <button type="button" (click)="resetDisplayState()" class="reset-button">Clear Update Form</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Sales Opportunity Display Section -->
+  <div class="opportunity-display-section">
+    <h3>View Sales Opportunities</h3>
+
+    <!-- Input for Specific Opportunity ID -->
+    <div class="input-group">
+      <label for="opportunityIdInput">Enter Opportunity ID:</label>
+      <div class="input-with-button">
+        <input type="number" id="opportunityIdInput" name="opportunityIdInput" [(ngModel)]="opportunityIdInput" placeholder="e.g., 123">
+        <button type="button" (click)="fetchOpportunityFromInput()" [disabled]="!opportunityIdInput || isNumberNaN(opportunityIdInput) || isLoading" class="fetch-button">Get Opportunity</button>
+      </div>
+      <div *ngIf="opportunityIdInput !== null && isNumberNaN(opportunityIdInput)" class="error-text">
+        Please enter a valid number for Opportunity ID.
+      </div>
+      <div *ngIf="opportunityIdInput === null && !isLoading && displayedOpportunities.length === 0 && !errorMessage" class="info-text">
+        Enter an ID above to view a specific sales opportunity.
+      </div>
+    </div>
+
+    <div class="divider">OR</div>
+
+    <!-- Button to View All Sales Opportunities -->
+    <div class="view-all-opportunities-section">
+      <button type="button" (click)="showAllOpportunities()" [disabled]="isLoading" class="view-all-button">View All Sales Opportunities</button>
+    </div>
+
+    <!-- Cards for Displayed Opportunities -->
+    <div class="opportunity-card-grid mt-4">
+      <ng-container *ngIf="displayedOpportunities.length > 0; else noOpportunities">
+        <div class="opportunity-card" *ngFor="let opp of displayedOpportunities">
+          <div class="card-header">
+            <h4>{{ opp.name }} (ID: {{ opp.id }})</h4>
+            <span class="card-stage">{{ opp.stage }}</span>
+          </div>
+          <div class="card-body">
+            <p><strong>Amount:</strong> {{ opp.amount | currency:'USD':'symbol':'1.2-2' }}</p>
+            <p><strong>Close Date:</strong> {{ opp.closeDate | date:'mediumDate' }}</p>
+            <p><strong>Lead Source:</strong> {{ opp.leadSource }}</p>
+            <p *ngIf="opp.notes"><strong>Notes:</strong> {{ opp.notes }}</p>
+          </div>
+        </div>
+      </ng-container>
+      <ng-template #noOpportunities>
+        <p class="info-text" *ngIf="!isLoading && !errorMessage">
+          No sales opportunities to display.
+        </p>
+      </ng-template>
+    </div>
+  </div>
+</div>

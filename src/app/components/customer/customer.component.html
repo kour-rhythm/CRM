@@ -1,0 +1,141 @@
+<div class="customer-management-container">
+  <header class="app-header">
+    <div class="logo-section">
+      <!-- Your Logo - Changed to angular-logo.png for consistency -->
+      <a routerLink="/dashboard" class="header-logo-link">
+        <img src="assets/crm.png" alt="App Logo" class="logo-image"><!-- Added title for consistency with dashboard header -->
+      </a>
+    </div>
+    <div class="header-right">
+      <!-- Dashboard Link -->
+      <a routerLink="/dashboard" class="dashboard-link-right">Dashboard</a>
+      <!-- Logout Button - Changed from <a> to <button> and added (click) handler -->
+      <button class="logout-button" (click)="logout()">Logout</button>
+    </div>
+  </header>
+    <h2>Customer Management</h2>
+  
+    <!-- Status Messages -->
+    <div *ngIf="isLoading" class="loading-spinner">Loading...</div>
+    <div *ngIf="errorMessage" class="alert-message error">{{ errorMessage }}</div>
+    <div *ngIf="successMessage" class="alert-message success">{{ successMessage }}</div>
+  
+    <!-- Customer Form -->
+    <div class="form-section">
+      <h3>Add New Customer</h3>
+      <form #customerForm="ngForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" [(ngModel)]="customer.name" required #nameField="ngModel">
+          <div *ngIf="nameField.invalid && (nameField.dirty || nameField.touched)" class="error-text">
+            <div *ngIf="nameField.errors?.['required']">Name is required.</div>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="mobileNo">Mobile No:</label>
+          <input type="text" id="mobileNo" name="mobileNo" [(ngModel)]="customer.mobileNo" required pattern="^[0-9]{10}$" #mobileNoField="ngModel">
+          <div *ngIf="mobileNoField.invalid && (mobileNoField.dirty || mobileNoField.touched)" class="error-text">
+            <div *ngIf="mobileNoField.errors?.['required']">Mobile number is required.</div>
+            <div *ngIf="mobileNoField.errors?.['pattern']">Mobile number must be 10 digits.</div>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="emailId">Email ID:</label>
+          <input type="email" id="emailId" name="emailId" [(ngModel)]="customer.emailId" required email #emailIdField="ngModel">
+          <div *ngIf="emailIdField.invalid && (emailIdField.dirty || emailIdField.touched)" class="error-text">
+            <div *ngIf="emailIdField.errors?.['required']">Email is required.</div>
+            <div *ngIf="emailIdField.errors?.['email']">Enter a valid email address.</div>
+          </div>
+        </div>
+  
+        <div class="form-actions">
+          <button type="submit" [disabled]="customerForm.invalid || isLoading" class="submit-button">Add Customer</button>
+          <button type="button" (click)="resetForm()" class="reset-button">Reset</button>
+        </div>
+      </form>
+    </div>
+  
+    <!-- Customer Display Section -->
+    <div class="customer-display-section">
+      <h3>View Customers</h3>
+  
+      <!-- Input for Specific Customer ID -->
+      <div class="input-group">
+        <label for="customerIdInput">Enter Customer ID:</label>
+        <div class="input-with-button">
+          <input type="number" id="customerIdInput" name="customerIdInput" [(ngModel)]="customerIdInput" placeholder="e.g., 123">
+          <button type="button" (click)="fetchCustomerFromInput()" [disabled]="!customerIdInput || isLoading" class="fetch-button">Get Customer</button>
+        </div>
+        <div *ngIf="customerIdInput === null && !isLoading && !errorMessage && displayedCustomers.length === 0" class="info-text">
+          Enter an ID above to view a specific customer.
+        </div>
+      </div>
+  
+      <!-- Table for Specific Customer -->
+      <div class="customer-list-container mt-4">
+        <table class="customer-table" *ngIf="displayedCustomers.length === 1; else noSpecificCustomer">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Mobile No</th>
+              <th>Email ID</th>
+              <th>Orders</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let cust of displayedCustomers">
+              <td>{{ cust.id }}</td>
+              <td>{{ cust.name }}</td>
+              <td>{{ cust.mobileNo }}</td>
+              <td>{{ cust.emailId }}</td>
+              <td>{{ cust.noOfOrders }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <ng-template #noSpecificCustomer>
+          <!-- Only show this message if the intention was to fetch a specific customer but none was found/displayed -->
+          <p class="no-data-message" *ngIf="errorMessage || (customerIdInput !== null && displayedCustomers.length === 0 && !isLoading)">
+            {{ errorMessage ? errorMessage : 'No specific customer found with that ID.' }}
+          </p>
+        </ng-template>
+      </div>
+  
+      <div class="divider">OR</div>
+  
+      <!-- Button to View All Customers -->
+      <div class="view-all-customers-section">
+        <button type="button" (click)="showAllCustomers()" [disabled]="isLoading" class="view-all-button">View All Customers</button>
+      </div>
+  
+      <!-- Table for All Customers -->
+      <div class="customer-list-container mt-4">
+        <table class="customer-table" *ngIf="displayedAllCustomers.length > 0; else noAllCustomers">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Mobile No</th>
+              <th>Email ID</th>
+              <th>Orders</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let cust of displayedAllCustomers">
+              <td>{{ cust.id }}</td>
+              <td>{{ cust.name }}</td>
+              <td>{{ cust.mobileNo }}</td>
+              <td>{{ cust.emailId }}</td>
+              <td>{{ cust.noOfOrders }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <ng-template #noAllCustomers>
+          <p class="no-data-message" *ngIf="!isLoading">No customers available in the database.</p>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  

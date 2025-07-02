@@ -1,0 +1,98 @@
+<div class="customer-reports-container">
+  <!-- Header (consistent with other internal pages, including a back button) -->
+  <header class="app-header">
+    <div class="logo-section">
+      <a routerLink="/dashboard" class="header-logo-link">
+        <img src="assets/crm.png" alt="App Logo" class="logo-image">
+      </a>
+    </div>
+    <div class="header-right">
+      <a class="dashboard-link-right" routerLink="/reports">Reports Portal</a>
+      <a routerLink="/dashboard" class="dashboard-link-right">Dashboard</a>
+      <button class="logout-button" (click)="logout()">Logout</button>
+    </div>
+  </header>
+
+  <h2 class="page-title">Customer Reports</h2>
+
+  <!-- Status Messages -->
+  <div *ngIf="isLoading" class="loading-spinner">Loading Reports...</div>
+  <div *ngIf="errorMessage" class="alert-message error">{{ errorMessage }}</div>
+  <div *ngIf="successMessage" class="alert-message success">{{ successMessage }}</div>
+
+  <!-- Report Generation Section -->
+  <div class="report-section generate-report-section">
+    <h3>Generate New Customer Report</h3>
+    <p class="section-description">Fetch the latest data for a customer and save it as a report.</p>
+    <div class="input-group">
+      <label for="customerIdToGenerate">Enter Customer ID to Generate Report:</label>
+      <div class="input-with-button">
+        <input type="number" id="customerIdToGenerate" name="customerIdToGenerate" [(ngModel)]="customerIdToGenerate" placeholder="e.g., 123">
+        <button type="button" (click)="generateAndSaveCustomerReport()" [disabled]="!customerIdToGenerate || isNumberNaN(customerIdToGenerate) || isLoading" class="generate-button">
+          Generate & Save
+        </button>
+      </div>
+      <div *ngIf="customerIdToGenerate !== null && isNumberNaN(customerIdToGenerate)" class="error-text">
+        Please enter a valid number for Customer ID.
+      </div>
+    </div>
+  </div>
+
+  <div class="divider">OR</div>
+
+  <!-- Report Display Section -->
+  <div class="report-display-section">
+    <h3>View Customer Reports</h3>
+
+    <!-- Input for Specific Customer Report ID -->
+    <div class="input-group">
+      <label for="customerReportIdInput">Enter Customer ID:</label>
+      <div class="input-with-button">
+        <input type="number" id="customerReportIdInput" name="customerReportIdInput" [(ngModel)]="customerReportIdInput" placeholder="e.g., 123">
+        <button type="button" (click)="fetchSpecificCustomerReport()" [disabled]="!customerReportIdInput || isNumberNaN(customerReportIdInput) || isLoading" class="fetch-button">
+          Get Report
+        </button>
+      </div>
+      <div *ngIf="customerReportIdInput !== null && isNumberNaN(customerReportIdInput)" class="error-text">
+        Please enter a valid number for Customer ID.
+      </div>
+      <div *ngIf="customerReportIdInput === null && !isLoading && displayedReports.length === 0 && !errorMessage && !successMessage" class="info-text">
+        Enter a Customer ID above to view a specific report.
+      </div>
+    </div>
+
+    <div class="divider small-divider">OR</div>
+
+    <!-- Button to View All Customer Reports -->
+    <div class="view-all-reports-section">
+      <button type="button" (click)="showAllCustomerReports()" [disabled]="isLoading" class="view-all-button">
+        View All Customer Reports
+      </button>
+    </div>
+
+    <!-- Cards for Displayed Customer Reports -->
+    <div class="report-card-grid mt-4">
+      <ng-container *ngIf="displayedReports.length > 0; else noReports">
+        <div class="report-card" *ngFor="let report of displayedReports">
+          <div class="card-header">
+            <h4 class="customer-id-emphasis">Customer ID: {{ report.customerId }}</h4>
+          </div>
+          <div class="card-body">
+            <p><strong>Name:</strong> {{ report.customerName }}</p>
+            <p><strong>Email:</strong> {{ report.customerEmail }}</p>
+            <p><strong>Orders:</strong> {{ report.noOfOrders }}</p>
+            <p><strong>Last Order Date:</strong> {{ report.mostRecentOrderDate | date:'mediumDate' }}</p>
+          </div>
+        </div>
+      </ng-container>
+      <ng-template #noReports>
+        <p class="no-data-message" *ngIf="!isLoading && !errorMessage && !successMessage">
+          No customer reports to display.
+        </p>
+        <p class="no-data-message" *ngIf="errorMessage">
+          {{ errorMessage }}
+        </p>
+      </ng-template>
+    </div>
+  </div>
+</div>

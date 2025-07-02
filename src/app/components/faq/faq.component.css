@@ -1,0 +1,243 @@
+/* General container styling - consistent with other management pages */
+.faq-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 30px; /* Increased padding for consistency */
+    /* --- Moonlit Serenity Tones: Light background for contrast --- */
+    background-color: #ffffff;
+    border-radius: 15px; /* Consistent rounded corners */
+    /* --- Moonlit Serenity Tones: Enhanced shadow for a floating effect --- */
+    box-shadow: 0 15px 35px rgba(61, 82, 160, 0.15); /* Softer, wider shadow */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+
+/* Removed duplicated .app-header and related styles from here, as they should be in global.css
+   These styles were causing conflicts with the global header/navbar styling. */
+
+h2 {
+    text-align: center;
+    /* --- Moonlit Serenity Tones: Darkest blue/purple for main headings with text shadow --- */
+    color: #3D52A0; /* Darkest blue/purple */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); /* Subtle text shadow */
+    margin-bottom: 30px;
+    font-size: 2.2rem; /* Consistent font size */
+    font-weight: 700;
+}
+
+.faq-item {
+    /* --- Moonlit Serenity Tones: Light blue/gray border --- */
+    border: 1px solid #ADBBDA; /* Light blue/gray */
+    border-radius: 10px; /* Consistent rounded corners */
+    margin-bottom: 15px;
+    overflow: hidden;
+    /* --- Moonlit Serenity Tones: Subtle box shadow for lift --- */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); /* Slight lift */
+    transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+    transform: translateY(-3px); /* Subtle lift on hover */
+    box-shadow: 0 8px 20px rgba(61, 82, 160, 0.1); /* More pronounced shadow on hover */
+}
+
+.question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    cursor: pointer;
+    /* --- Moonlit Serenity Tones: Very light purple/gray background for questions --- */
+    background-color: #F8F5FB; /* A very subtle off-white/purple-gray */
+    /* --- Moonlit Serenity Tones: Light blue/gray border at bottom --- */
+    border-bottom: 1px solid #ADBBDA; /* Light blue/gray */
+    transition: background-color 0.3s ease;
+}
+
+.question:hover {
+    /* --- Moonlit Serenity Tones: Slightly darker light purple/gray on hover --- */
+    background-color: #EEEBF7; /* A slightly deeper light purple/gray */
+}
+
+.question h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    /* --- Moonlit Serenity Tones: Darkest blue/purple for question text --- */
+    color: #3D52A0; /* Darkest blue/purple */
+    text-shadow: 0.5px 0.5px 1px rgba(0, 0, 0, 0.1); /* Subtle text shadow */
+    border-bottom: none; /* Remove duplicate border-bottom from h3 */
+    padding-bottom: 0; /* Remove padding-bottom from h3 */
+}
+
+.icon {
+    font-size: 1.5rem;
+    font-weight: bold;
+    /* --- Moonlit Serenity Tones: Medium blue for icons --- */
+    color: #7091E6; /* Medium blue */
+    transition: transform 0.3s ease;
+}
+
+.answer {
+    padding: 0 20px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out;
+}
+
+/* This class will be added when item.isOpen is true */
+.answer.open {
+    padding: 15px 20px;
+    max-height: 300px; /* Adjust this value to be larger than your longest answer */
+}
+
+/* --- Ask a Question Form Styles --- */
+.ask-question-container {
+    margin-top: 40px;
+    padding: 25px;
+    /* --- Moonlit Serenity Tones: Very light purple/gray background --- */
+    background-color: #F8F5FB; /* A very subtle off-white/purple-gray */
+    border-radius: 10px; /* Consistent rounded corners */
+    /* --- Moonlit Serenity Tones: Subtle box shadow for lift --- */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); /* Slight lift */
+    text-align: center;
+}
+
+.ask-question-container h3 {
+    /* --- Moonlit Serenity Tones: Darkest blue/purple for heading --- */
+    color: #3D52A0; /* Darkest blue/purple */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Subtle text shadow */
+    margin-bottom: 20px;
+    border-bottom: none; /* Remove duplicate border-bottom from h3 */
+    padding-bottom: 0; /* Remove padding-bottom from h3 */
+}
+
+.input-group {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.input-group input {
+    flex-grow: 1;
+    max-width: 500px;
+    padding: 12px;
+    /* --- Moonlit Serenity Tones: Muted blue/gray border for inputs --- */
+    border: 1px solid #8697C4; /* Muted blue/gray */
+    border-radius: 8px; /* Consistent rounded corners */
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.input-group input:focus {
+    /* --- Moonlit Serenity Tones: Darkest blue/purple border on focus --- */
+    border-color: #3D52A0; /* Darkest blue/purple */
+    /* --- Moonlit Serenity Tones: Muted blue/gray shadow on focus, slightly more pronounced --- */
+    box-shadow: 0 0 0 4px rgba(134, 151, 196, 0.3); /* Clearer focus indication */
+    outline: none;
+}
+
+.input-group button {
+    padding: 12px 25px;
+    border: none;
+    /* --- Moonlit Serenity Tones: Medium blue for button with gradient --- */
+    background: linear-gradient(to right, #7091E6, #8697C4); /* Gradient for depth */
+    color: white;
+    border-radius: 8px; /* Consistent rounded corners */
+    font-size: 1rem;
+    font-weight: 600; /* Increased font-weight */
+    cursor: pointer;
+    /* --- Moonlit Serenity Tones: Subtle box shadow for buttons --- */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Initial subtle shadow */
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input-group button:hover:not([disabled]) {
+    /* --- Moonlit Serenity Tones: Darkest blue/purple on hover, more prominent shadow --- */
+    background-color: #3D52A0; /* Darkest blue/purple */
+    transform: translateY(-2px); /* Slight lift on hover */
+    box-shadow: 0 4px 10px rgba(61, 82, 160, 0.4); /* Clearer shadow on hover */
+}
+
+.input-group button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    box-shadow: none; /* No shadow when disabled */
+}
+
+/* Responsive Adjustments (Keeping existing dimensions as requested) */
+@media (max-width: 768px) {
+    .faq-container {
+        margin: 20px;
+        padding: 20px;
+    }
+
+    /* .app-header responsiveness is handled in global.css */
+
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    .question h3 {
+        font-size: 1.1rem;
+    }
+
+    .icon {
+        font-size: 1.3rem;
+    }
+
+    .answer.open {
+        max-height: 250px; /* Adjusted max-height for smaller screens */
+    }
+
+    .ask-question-container {
+        padding: 20px;
+    }
+
+    .ask-question-container h3 {
+        font-size: 1.4rem;
+    }
+
+    .input-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .input-group input,
+    .input-group button {
+        width: 100%;
+        max-width: none; /* Allow full width */
+        padding: 10px 15px;
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .faq-container {
+        margin: 10px;
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .question h3 {
+        font-size: 1rem;
+    }
+
+    .icon {
+        font-size: 1.2rem;
+    }
+
+    .ask-question-container h3 {
+        font-size: 1.2rem;
+    }
+
+    .input-group input,
+    .input-group button {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+}

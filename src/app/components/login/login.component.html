@@ -1,0 +1,49 @@
+<!-- Global Navigation Bar (embedded) -->
+<nav class="navbar">
+    <div class="navbar-content">
+      <!-- Logo on the left -->
+      <a routerLink="/" class="navbar-logo-link">
+        <img src="assets/crm.png" alt="Your Logo" class="navbar-logo">
+      </a>
+      <!-- Navigation links on the right -->
+      <ul class="nav-list">
+        <li class="nav-item"><a routerLink="/login" routerLinkActive="active-link">Login</a></li>
+        <li class="nav-item"><a routerLink="/register" routerLinkActive="active-link">Register</a></li>
+      </ul>
+    </div>
+  </nav>
+  
+  <div class="auth-container">
+    <h2>Login</h2>
+    <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+      <div class="form-group">
+        <label for="usernameOrEmail">Username or Email:</label>
+        <input type="text" id="usernameOrEmail" name="usernameOrEmail"
+               [(ngModel)]="loginData.usernameOrEmail" required #usernameOrEmail="ngModel">
+        <div *ngIf="usernameOrEmail.invalid && (usernameOrEmail.dirty || usernameOrEmail.touched)" class="error-message">
+          <div *ngIf="usernameOrEmail.errors?.['required']">Username or Email is required.</div>
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password"
+               [(ngModel)]="loginData.password" required #password="ngModel">
+        <div *ngIf="password.invalid && (password.dirty || password.touched)" class="error-message">
+          <div *ngIf="password.errors?.['required']">Password is required.</div>
+        </div>
+      </div>
+  
+      <button type="submit" [disabled]="!loginForm.valid || isLoading">Login</button>
+    </form>
+  
+    <div *ngIf="errorMessage" class="alert-error">
+      {{ errorMessage }}
+    </div>
+    <div *ngIf="successMessage" class="alert-success">
+      {{ successMessage }}
+    </div>
+  
+    <p class="link-text">Don't have an account? <a routerLink="/register">Register here</a></p>
+  </div>
+  

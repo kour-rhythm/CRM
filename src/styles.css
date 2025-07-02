@@ -1,0 +1,100 @@
+/* You can add global styles to this file, and also import other style files */
+/* Overall app container */
+.app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure it takes full viewport height */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* --- Moonlit Serenity Tones: Very lightest purple/gray for overall app background --- */
+    background-color: #EDE8F5; /* Very light purple/gray */
+  }
+ 
+  /* Global Header Styling */
+  .app-header {
+    /* --- Moonlit Serenity Tones: Darkest blue/purple background with subtle gradient --- */
+    background: linear-gradient(to right, #3D52A0, #4C65B0); /* Subtle gradient for depth */
+    padding: 15px 30px;
+    /* --- Moonlit Serenity Tones: Enhanced shadow for depth and lift --- */
+    box-shadow: 0 4px 15px rgba(61, 82, 160, 0.2); /* Softer, more prominent shadow */
+    display: flex;
+    justify-content: space-between; /* Space out logo and dashboard link */
+    align-items: center;
+    /* --- Moonlit Serenity Tones: A subtle medium-blue border at the bottom --- */
+    border-bottom: 1px solid #8697C4; /* Muted blue/gray */
+    margin-bottom: 30px; /* Space below the header */
+  }
+ 
+  .logo-section {
+    display: flex;
+    align-items: center;
+  }
+ 
+  .header-logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none; /* Remove underline from link */
+    /* --- Moonlit Serenity Tones: White text for title against dark header --- */
+    color: white; /* White for strong contrast */
+    font-weight: 600;
+  }
+ 
+  .logo-image { /* Renamed from .header-logo for clarity specific to this context */
+    height: 35px; /* Adjust logo size */
+    width: auto;
+    margin-right: 15px;
+  }
+ 
+  .header-title { /* Added for consistency with dashboard header */
+    font-size: 1.5rem; /* Larger font size for the title */
+    font-weight: 700;
+  }
+ 
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between Dashboard link and Logout button reduced by half */
+  }
+ 
+  .dashboard-link-right {
+    text-decoration: none;
+    /* --- Moonlit Serenity Tones: White text with subtle shadow for contrast --- */
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Subtle text shadow */
+    font-weight: 600;
+    font-size: 1.1rem; /* Adjusted to fit better with buttons */
+    padding: 8px 15px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+  }
+ 
+  .dashboard-link-right:hover {
+    /* --- Moonlit Serenity Tones: Medium blue background on hover, slightly more distinct --- */
+    background-color: #7091E6; /* Medium blue */
+    /* --- Moonlit Serenity Tones: Enhanced shadow on hover --- */
+    box-shadow: 0 2px 10px rgba(112, 145, 230, 0.5); /* More prominent shadow */
+    color: white;
+  }
+ 
+  /* Styling for the Logout Button */
+  .logout-button {
+    padding: 8px 15px;
+    /* --- Moonlit Serenity Tones: Medium blue for logout button with gradient --- */
+    background: linear-gradient(to right, #7091E6, #8697C4); /* Subtle gradient */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Initial subtle shadow */
+  }
+ 
+  .logout-button:hover {
+    /* --- Moonlit Serenity Tones: Darkest blue/purple on hover for logout, more prominent shadow --- */
+    background-color: #3D52A0; /* Darkest blue/purple */
+    transform: translateY(-2px); /* More pronounced lift */
+    box-shadow: 0 4px 10px rgba(61, 82, 160, 0.4); /* Clearer shadow on hover */
+  }
+ 
+ 
+ /* You can add global styles to this file, and also import other style files */

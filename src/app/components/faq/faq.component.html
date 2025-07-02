@@ -1,0 +1,44 @@
+<div class="faq-container">
+    <header class="app-header">
+        <div class="logo-section">
+          <!-- Your Logo -->
+          <a routerLink="/dashboard" class="header-logo-link">
+            <img src="assets/crm.png" alt="App Logo" class="logo-image">
+          </a>
+        </div>
+        <div class="header-right">
+          <!-- Dashboard Link -->
+          <a routerLink="/dashboard" class="dashboard-link-right">Dashboard</a>
+          <!-- Logout Button - Changed from <a> to <button> and added (click) handler -->
+          <button class="logout-button" (click)="logout()">Logout</button>
+        </div>
+      </header>
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-list">
+    <div *ngFor="let item of faqItems" class="faq-item">
+    <div class="question" (click)="toggleAnswer(item)">
+    <h3>{{ item.question }}</h3>
+    <span class="icon">{{ item.isOpen ? '-' : '+' }}</span>
+    </div>
+    <div class="answer" [class.open]="item.isOpen">
+        <p>{{ item.answer }}</p>
+        </div>
+    </div>
+    </div>
+
+    <div class="ask-question-container">
+        <h3>Can't find your answer? Ask us!</h3>
+        <div class="input-group">
+        <input
+                type="text"
+                placeholder="Type your question here..."
+                [value]="userQuestion"
+                (input)="onInput($event)"
+                (keyup.enter)="submitQuestion()"
+              />
+        <button (click)="submitQuestion()" [disabled]="!userQuestion.trim()">
+                Submit Question
+        </button>
+        </div>
+        </div>
+        </div>
